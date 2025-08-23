@@ -112,14 +112,14 @@ export default function HomePage() {
   const handleAPKDownload = () => {
     // Create a download link for the APK file
     const link = document.createElement('a');
-    link.href = '/downloads/4GPlatform.apk'; // Update this path to your APK file location
-    link.download = '4GPlatform.apk';
+    link.href = '/downloads/mrayman.apk'; // Update this path to your APK file location
+    link.download = 'mrayman.apk';
     link.target = '_blank';
     
     // Fallback for mobile browsers
     if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
       // For Android devices, open the download directly
-      window.open('/downloads/4GPlatform.apk', '_blank');
+      window.open('/downloads/mrayman.apk', '_blank');
     } else {
       // For other devices, trigger download
       document.body.appendChild(link);
@@ -436,7 +436,7 @@ export default function HomePage() {
       </section>
       
       {/* Instructor Section */}
-      <Suspense fallback={
+      {/* <Suspense fallback={
         <div className="py-20 bg-white dark:bg-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
@@ -456,7 +456,7 @@ export default function HomePage() {
         </div>
       }>
         <InstructorSection />
-      </Suspense>
+      </Suspense> */}
       {/* Latest Blogs Section */}
       <section className="py-20 bg-gray-50 dark:bg-gray-900" dir="rtl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -769,22 +769,22 @@ export default function HomePage() {
       </section>
 
       {/* Static FAQ Section */}
-      <section className="py-16 px-4 lg:px-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800">
+      <section className="py-16 px-4 lg:px-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800" dir="rtl">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
+            <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4 text-right">
               الأسئلة الشائعة
             </h2>
-            <p className="text-lg text-gray-600 dark:text-gray-300">
+            <p className="text-lg text-gray-600 dark:text-gray-300 text-right">
               كل ما تحتاج معرفته عن منصتنا
             </p>
           </div>
           <Suspense fallback={
             <div className="space-y-4">
               {[1, 2, 3, 4].map(i => (
-                <div key={i} className="bg-white dark:bg-gray-800 rounded-lg p-6 animate-pulse">
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
-                  <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
+                <div key={i} className="bg-white dark:bg-gray-800 rounded-lg p-6 animate-pulse text-right">
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2 mr-auto"></div>
+                  <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mr-auto"></div>
                 </div>
               ))}
             </div>
@@ -830,8 +830,8 @@ export default function HomePage() {
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-900 dark:text-white">واتساب</h3>
-                  <a href="https://wa.me/01555559887" className="text-green-600 dark:text-green-400 hover:underline">
-                    01555559887
+                  <a href="https://wa.me/+201555559887" className="text-green-600 dark:text-green-400 hover:underline">
+                  +201555559887
                   </a>
                 </div>
               </div>
@@ -948,7 +948,7 @@ export default function HomePage() {
             </p>
           </div>
           <div className="flex items-center justify-center">
-            <a href="" rel="noopener noreferrer" className="flex items-center justify-center">
+            <a href="https://fikra.solutions/" rel="noopener noreferrer" className="flex items-center justify-center">
               <img
                 src={fikraLogo}
                 alt="Fikra Software Logo"

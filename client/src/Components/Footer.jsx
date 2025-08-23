@@ -36,7 +36,7 @@ export default function Footer() {
         <div className="flex gap-5 items-center">
              
           <a
-            href="https://www.facebook.com/people/4G-Platform/61574141811288/?rdid=MTlfwI0jSR2kq9iI&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1B4UBmHgEh%2F"
+            href="https://www.facebook.com/share/16Vq29HcXH/"
             target="_blank"
             rel="noopener noreferrer"
             className="md:text-3xl text-xl text-gray-900 dark:text-slate-50 hover:text-gray-500 dark:hover:text-slate-300 transition-colors"
