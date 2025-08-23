@@ -9,6 +9,7 @@ import { getFeaturedCourses } from "../Redux/Slices/CourseSlice";
 import { generateImageUrl } from "../utils/fileUtils";
 import AnimatedHero from "../Components/AnimatedHero";
 import fikraLogo from "../assets/Asset 2@3x.png";
+import promotionalBanner from "../assets/Untitled-1.jpg";
 
 // Lazy load components
 const FAQAccordion = lazy(() => import("../Components/FAQAccordion"));
@@ -42,7 +43,9 @@ import {
   FaMobile,
   FaDownload,
   FaGooglePlay,
-  FaAndroid
+  FaAndroid,
+  FaPhone,
+  FaWhatsapp
 } from "react-icons/fa";
 import { placeholderImages } from "../utils/placeholderImages";
 // Using a public URL for now - replace with your actual image URL
@@ -194,6 +197,7 @@ export default function HomePage() {
     <Layout>
       {/* Hero Section - Clean & Modern RTL */}
       <AnimatedHero onGetStarted={onGetStarted} />
+
 
       {/* Featured Subjects Section */}
       <section className="py-20 bg-gray-50 dark:bg-gray-900" dir="rtl">
@@ -692,7 +696,7 @@ export default function HomePage() {
                           <FaGraduationCap className="text-white text-xl" />
                         </div>
                         <div>
-                          <h3 className="font-bold text-lg text-gray-900">تطبيق 4G</h3>
+                          <h3 className="font-bold text-lg text-gray-900">تطبيق الاستاذ ايمن ابوعيش</h3>
                           <p className="text-sm text-gray-600">منصة التعلم الذكية</p>
                         </div>
                       </div>

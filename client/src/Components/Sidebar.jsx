@@ -75,12 +75,13 @@ export default function Sidebar({ hideBar = false }) {
         <div className="min-h-full w-64 bg-white dark:bg-gray-900 text-base-content p-3 relative z-60" dir="rtl">
           {/* Header */}
           <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-orange-600 dark:text-orange-400">
+              منصة الاستاذ ايمن ابوعيش
+            </h2>
             <button onClick={closeSidebar} className="text-red-500 hover:text-red-700">
               <AiFillCloseCircle size={20} />
             </button>
-            <h2 className="text-lg font-bold text-orange-600 dark:text-orange-400">
-              4G
-            </h2>
+            
           </div>
 
           {/* Wallet Balance */}
