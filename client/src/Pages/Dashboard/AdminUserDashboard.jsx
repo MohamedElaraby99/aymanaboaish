@@ -55,7 +55,7 @@ import {
     FaIdCard
 } from "react-icons/fa";
 import { axiosInstance } from "../../Helpers/axiosInstance";
-import { egyptianGovernorates } from "../../utils/governorateMapping";
+import { egyptianCities } from "../../utils/governorateMapping";
 
 export default function AdminUserDashboard() {
     const dispatch = useDispatch();
@@ -1256,7 +1256,7 @@ export default function AdminUserDashboard() {
 
                                             <div>
                                                 <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                                                    المحافظة *
+                                                    المدينة *
                                                 </label>
                                                 <select
                                                     required
@@ -1264,8 +1264,8 @@ export default function AdminUserDashboard() {
                                                     onChange={(e) => setCreateUserForm({...createUserForm, governorate: e.target.value})}
                                                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
                                                 >
-                                                    <option value="">اختر المحافظة</option>
-                                                    {egyptianGovernorates.map((gov) => (
+                                                    <option value="">اختر المدينة</option>
+                                                    {egyptianCities.map((gov) => (
                                                         <option key={gov.value} value={gov.value}>
                                                             {gov.label}
                                                         </option>
@@ -1600,15 +1600,15 @@ export default function AdminUserDashboard() {
                                             )}
                                         </div>
                                         <div className="space-y-2">
-                                            <label className="text-sm font-medium text-gray-600 dark:text-gray-400">المحافظة</label>
+                                            <label className="text-sm font-medium text-gray-600 dark:text-gray-400">المدينة</label>
                                             {isEditing ? (
                                                 <select
                                                     value={editForm.governorate}
                                                     onChange={(e) => setEditForm({...editForm, governorate: e.target.value})}
                                                     className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
                                                 >
-                                                    <option value="">اختر المحافظة</option>
-                                                    {egyptianGovernorates.map((gov) => (
+                                                    <option value="">اختر المدينة</option>
+                                                    {egyptianCities.map((gov) => (
                                                         <option key={gov.value} value={gov.value}>
                                                             {gov.label}
                                                         </option>

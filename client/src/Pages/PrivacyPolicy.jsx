@@ -125,7 +125,7 @@ export default function PrivacyPolicy() {
                         </li>
                         <li className="flex items-start">
                           <FaCheckCircle className="text-green-500 mt-1 ml-3 flex-shrink-0" />
-                          <span>الموقع الجغرافي (المحافظة)</span>
+                          <span>الموقع الجغرافي (المدينة)</span>
                         </li>
                         <li className="flex items-start">
                           <FaCheckCircle className="text-green-500 mt-1 ml-3 flex-shrink-0" />

@@ -30,7 +30,7 @@ const CourseDetailsModal = ({ course, onClose }) => {
   );
 };
 
-const CourseList = ({ courses, loading, pagination, onEditCourse, role }) => {
+const CourseList = ({ courses, loading, pagination, onEditCourse, role, onRefresh }) => {
   const dispatch = useDispatch();
   const [structureModalCourse, setStructureModalCourse] = useState(null);
   const [detailsModalCourse, setDetailsModalCourse] = useState(null);
@@ -39,6 +39,8 @@ const CourseList = ({ courses, loading, pagination, onEditCourse, role }) => {
     if (window.confirm('هل أنت متأكد من حذف هذه الدرس؟')) {
       try {
         await dispatch(deleteCourse(courseId)).unwrap();
+        // Refresh the courses list after deletion
+        if (onRefresh) onRefresh();
       } catch (error) {
         // console.error('Error deleting course:', error);
       }
@@ -48,6 +50,8 @@ const CourseList = ({ courses, loading, pagination, onEditCourse, role }) => {
   const handleToggleFeatured = async (courseId, currentFeatured) => {
     try {
       await dispatch(toggleFeatured(courseId)).unwrap();
+      // Refresh the courses list after toggling featured status
+      if (onRefresh) onRefresh();
     } catch (error) {
       // console.error('Error toggling featured status:', error);
     }

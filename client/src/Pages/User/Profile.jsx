@@ -8,7 +8,7 @@ import { FiMoreVertical } from "react-icons/fi";
 import Layout from "../../Layout/Layout";
 import { useNavigate } from "react-router-dom";
 
-import { egyptianGovernorates, getArabicGovernorate } from "../../utils/governorateMapping";
+import { egyptianCities, getArabicCity } from "../../utils/governorateMapping";
 
 
 export default function Profile() {
@@ -418,7 +418,7 @@ export default function Profile() {
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
                       <FaMapMarkerAlt className="text-red-500" />
-                      المحافظة
+                      المدينة
                     </label>
                     <select
                       value={isEditing ? userInput.governorate : (userData?.governorate || "")}
@@ -430,8 +430,8 @@ export default function Profile() {
                           : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white'
                       }`}
                     >
-                      <option value="">اختر المحافظة</option>
-                      {egyptianGovernorates.map((gov) => (
+                      <option value="">اختر المدينة</option>
+                      {egyptianCities.map((gov) => (
                         <option key={gov.value} value={gov.value}>
                           {gov.label}
                         </option>

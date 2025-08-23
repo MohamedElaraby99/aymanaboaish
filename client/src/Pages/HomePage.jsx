@@ -46,7 +46,10 @@ import {
   FaGooglePlay,
   FaAndroid,
   FaPhone,
-  FaWhatsapp
+  FaWhatsapp,
+  FaFacebook,
+  FaYoutube,
+  FaComments
 } from "react-icons/fa";
 import { placeholderImages } from "../utils/placeholderImages";
 // Using a public URL for now - replace with your actual image URL
@@ -791,6 +794,141 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Contact Section */}
+      <section className="py-16 px-4 lg:px-8 bg-white dark:bg-gray-900">
+        <div className="max-w-4xl mx-auto">
+          {/* Contact Information */}
+          <div className="space-y-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+                تواصل معنا
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300">
+                لديك أسئلة؟ نحب أن نسمع منك. تواصل معنا من خلال أي من هذه القنوات. نحن هنا لمساعدتك!
+              </p>
+            </div>
+
+            {/* Contact Details */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Phone */}
+              <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="flex-shrink-0 w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mr-4">
+                  <FaPhone className="text-orange-600 dark:text-orange-400 text-xl" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">الهاتف</h3>
+                  <a href="tel:01080808667" className="text-orange-600 dark:text-orange-400 hover:underline">
+                    01080808667
+                  </a>
+                </div>
+              </div>
+
+              {/* WhatsApp */}
+              <div className="flex items-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="flex-shrink-0 w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mr-4">
+                  <FaWhatsapp className="text-green-600 dark:text-green-400 text-xl" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-gray-900 dark:text-white">واتساب</h3>
+                  <a href="https://wa.me/01555559887" className="text-green-600 dark:text-green-400 hover:underline">
+                    01555559887
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Social Media */}
+            <div className="mt-12 text-center">
+              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-8">
+                تابعنا
+              </h3>
+              <div className="flex flex-wrap justify-center gap-6 max-w-md mx-auto">
+                <a
+                  href="https://www.facebook.com/share/16Vq29HcXH/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col items-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:text-orange-600 hover:scale-105"
+                  title="Facebook"
+                >
+                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-2 group-hover:bg-opacity-80 transition-colors">
+                    <FaFacebook className="text-2xl" />
+                  </div>
+                  <span className="text-xs font-medium text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+                    Facebook
+                  </span>
+                </a>
+                <a
+                  href="https://youtube.com/@_aymanaboaish9685?si=X_KXTLDEsxNG5tAs"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col items-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:text-orange-600 hover:scale-105"
+                  title="YouTube"
+                >
+                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-2 group-hover:bg-opacity-80 transition-colors">
+                    <FaYoutube className="text-2xl" />
+                  </div>
+                  <span className="text-xs font-medium text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+                    YouTube
+                  </span>
+                </a>
+                <a
+                  href="https://wa.me/01555559887"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex flex-col items-center p-4 bg-gray-50 dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:text-green-500 hover:scale-105"
+                  title="WhatsApp"
+                >
+                  <div className="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mb-2 group-hover:bg-opacity-80 transition-colors">
+                    <FaWhatsapp className="text-2xl" />
+                  </div>
+                  <span className="text-xs font-medium text-gray-600 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
+                    WhatsApp
+                  </span>
+                </a>
+              </div>
+            </div>
+
+            {/* Additional Info */}
+            <div className="mt-12 text-center">
+              <div className="bg-gradient-to-r from-orange-50 to-yellow-50 dark:from-orange-900/20 dark:to-yellow-900/20 rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                  لماذا تختار منصتنا؟
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <FaUser className="text-2xl text-orange-600 dark:text-orange-400" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">دعم متخصص</h4>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      دعم العملاء على مدار الساعة لمساعدتك في أي أسئلة
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <FaGlobe className="text-2xl text-orange-600 dark:text-orange-400" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">مجتمع عالمي</h4>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      تواصل مع المتعلمين من جميع أنحاء العالم
+                    </p>
+                  </div>
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <FaComments className="text-2xl text-orange-600 dark:text-orange-400" />
+                    </div>
+                    <h4 className="font-semibold text-gray-900 dark:text-white mb-2">استجابة سريعة</h4>
+                    <p className="text-gray-600 dark:text-gray-300">
+                      احصل على إجابات لأسئلتك خلال 24 ساعة
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
         {/* Partner Section */}
         <section className="py-16 bg-white dark:bg-gray-800" dir="rtl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -831,6 +969,18 @@ export default function HomePage() {
           <FaArrowUp className="w-5 h-5 group-hover:animate-bounce" />
         </button>
       )}
+
+      {/* Floating WhatsApp Button */}
+      <a
+        href="https://wa.me/01555559887"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed left-8 bottom-8 z-50 p-4 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg hover:shadow-xl transform hover:scale-110 transition-all duration-300 group animate-bounce"
+        aria-label="Contact us on WhatsApp"
+        title="تواصل معنا على واتساب"
+      >
+        <FaWhatsapp className="w-6 h-6" />
+      </a>
     </Layout>
   );
 }

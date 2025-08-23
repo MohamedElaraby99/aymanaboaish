@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { toast } from 'react-hot-toast';
 import { axiosInstance } from '../../Helpers/axiosInstance';
 import Layout from '../../Layout/Layout';
-import { getArabicGovernorate } from "../../utils/governorateMapping";
+import { getArabicCity } from "../../utils/governorateMapping";
 import { 
   FaUsers, 
   FaPlay, 
@@ -542,7 +542,7 @@ const UserProgressDashboard = () => {
                         <p><strong>رقم الهاتف:</strong> {selectedUser.user.phoneNumber}</p>
                       )}
                       {selectedUser.user.governorate && (
-                        <p><strong>المحافظة:</strong> {getArabicGovernorate(selectedUser.user.governorate)}</p>
+                        <p><strong>المدينة:</strong> {getArabicCity(selectedUser.user.governorate)}</p>
                       )}
                     </div>
                   </div>

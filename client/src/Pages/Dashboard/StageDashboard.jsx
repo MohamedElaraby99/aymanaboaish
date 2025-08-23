@@ -67,6 +67,9 @@ export default function StageDashboard() {
       await dispatch(createStage(formData)).unwrap();
       setShowCreateModal(false);
       resetForm();
+      // Refresh the stages list to show the newly created stage
+      dispatch(getAllStagesAdmin({ page: 1, limit: 100 }));
+      dispatch(getAllStagesWithStats());
     } catch (error) {
       console.error('Error creating stage:', error);
     }
@@ -85,6 +88,9 @@ export default function StageDashboard() {
       setShowEditModal(false);
       setSelectedStage(null);
       resetForm();
+      // Refresh the stages list to show the updated stage
+      dispatch(getAllStagesAdmin({ page: 1, limit: 100 }));
+      dispatch(getAllStagesWithStats());
     } catch (error) {
       console.error('Error updating stage:', error);
     }
@@ -94,6 +100,9 @@ export default function StageDashboard() {
     if (window.confirm('هل أنت متأكد من حذف هذه المرحلة؟')) {
       try {
         await dispatch(deleteStage(stageId)).unwrap();
+        // Refresh the stages list after deletion
+        dispatch(getAllStagesAdmin({ page: 1, limit: 100 }));
+        dispatch(getAllStagesWithStats());
       } catch (error) {
         console.error('Error deleting stage:', error);
       }
@@ -103,6 +112,9 @@ export default function StageDashboard() {
   const handleToggleStatus = async (stageId) => {
     try {
       await dispatch(toggleStageStatus(stageId)).unwrap();
+      // Refresh the stages list after status toggle
+      dispatch(getAllStagesAdmin({ page: 1, limit: 100 }));
+      dispatch(getAllStagesWithStats());
     } catch (error) {
       console.error('Error toggling stage status:', error);
     }

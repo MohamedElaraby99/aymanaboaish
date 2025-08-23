@@ -45,6 +45,9 @@ export default function CourseDashboard() {
   const handleCloseModal = () => {
     setShowCreateModal(false);
     setSelectedCourse(null);
+    // Refresh the courses list and stats after modal operations
+    dispatch(getAdminCourses());
+    dispatch(getCourseStats());
   };
 
   const handleFilterChange = (newFilters) => {
@@ -77,6 +80,11 @@ export default function CourseDashboard() {
     };
     setFilters(resetFilters);
     dispatch(getAdminCourses());
+  };
+
+  const refreshCourses = () => {
+    dispatch(getAdminCourses());
+    dispatch(getCourseStats());
   };
 
   return (
@@ -134,6 +142,7 @@ export default function CourseDashboard() {
             pagination={pagination}
             onEditCourse={handleEditCourse}
             role={role}
+            onRefresh={refreshCourses}
           />
 
           {/* Create/Edit Modal */}

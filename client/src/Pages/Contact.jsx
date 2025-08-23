@@ -132,19 +132,6 @@ export default function Contact() {
                     </a>
                   </div>
                 </div>
-
-                {/* Vodafone Cash */}
-                <div className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                  <div className="flex-shrink-0 w-12 h-12 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center mr-4">
-                    <FaPhone className="text-orange-600 dark:text-orange-400 text-xl" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">فودافون كاش</h3>
-                    <span className="text-orange-600 dark:text-orange-400">
-                      {contactInfo.vodafoneCash}
-                    </span>
-                  </div>
-                </div>
               </div>
 
               {/* Social Media */}

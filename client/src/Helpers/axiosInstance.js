@@ -31,7 +31,7 @@ const getBaseUrl = () => {
   }
   
   // Production fallback
-  const prodUrl = 'https://api.the4g.live/api/v1';
+  const prodUrl = 'https://api.mraymanaboaish.online/api/v1';
   console.log('🌐 Using production API URL:', prodUrl);
   return prodUrl;
 };
