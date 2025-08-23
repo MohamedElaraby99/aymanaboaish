@@ -10,12 +10,13 @@ import { generateImageUrl } from "../utils/fileUtils";
 import AnimatedHero from "../Components/AnimatedHero";
 import fikraLogo from "../assets/Asset 2@3x.png";
 import promotionalBanner from "../assets/Untitled-1.jpg";
-
+import logo from "../assets/logo.png";
 // Lazy load components
 const FAQAccordion = lazy(() => import("../Components/FAQAccordion"));
 const SubjectCard = lazy(() => import("../Components/SubjectCard"));
 const InstructorSection = lazy(() => import("../Components/InstructorSection"));
 const NewsletterSection = lazy(() => import("../Components/NewsletterSection"));
+
 
 import { 
   FaEye, 
@@ -644,9 +645,9 @@ export default function HomePage() {
                 {/* Google Play Store Button (Future) */}
                 <button
                   onClick={handlePlayStoreRedirect}
-                  className="group relative overflow-hidden bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3"
+                  className="group relative overflow-hidden bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white px-8 py-4 rounded-2xl font-semibold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center space-x-3"
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-blue-700 to-blue-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-orange-700 to-orange-800 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <FaGooglePlay className="w-6 h-6 relative z-10 ml-3" />
                   <div className="text-right relative z-10">
                     <div className="text-sm opacity-90">قريباً على</div>
@@ -693,7 +694,7 @@ export default function HomePage() {
                       {/* App Header */}
                       <div className="flex items-center space-x-4" dir="rtl">
                         <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center">
-                          <FaGraduationCap className="text-white text-xl" />
+                          <img src={logo} alt="logo" className="w-12 h-12" />
                         </div>
                         <div>
                           <h3 className="font-bold text-lg text-gray-900">تطبيق الاستاذ ايمن ابوعيش</h3>
@@ -705,25 +706,25 @@ export default function HomePage() {
                       <div className="space-y-4">
                         <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4">
                           <div className="flex justify-between items-start mb-2">
-                            <h4 className="font-semibold text-gray-900">دورات 4G</h4>
+                            <h4 className="font-semibold text-gray-900">الأحياء</h4>
                             <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">جديد</span>
                           </div>
-                          <p className="text-sm text-gray-600 mb-3"> دورات 4G </p>
+                          <p className="text-sm text-gray-600 mb-3"> الأحياء </p>
                           <div className="flex justify-between items-center">
                             <span className="text-sm text-blue-600 font-medium">30% مكتمل</span>
-                            <button className="bg-blue-600 text-white px-4 py-1 rounded-full text-xs">متابعة</button>
+                            <button className="bg-orange-600 text-white px-4 py-1 rounded-full text-xs">متابعة</button>
                           </div>
                         </div>
 
                         <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-4">
                           <div className="flex justify-between items-start mb-2">
-                            <h4 className="font-semibold text-gray-900">دورات 4G</h4>
+                            <h4 className="font-semibold text-gray-900">علوم متكاملة </h4>
                             <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">شائع</span>
                           </div>
-                          <p className="text-sm text-gray-600 mb-3"> دورات 4G </p>
+                          <p className="text-sm text-gray-600 mb-3">  علوم متكاملة </p>
                           <div className="flex justify-between items-center">
                             <span className="text-sm text-green-600 font-medium">75% مكتمل</span>
-                            <button className="bg-green-600 text-white px-4 py-1 rounded-full text-xs">متابعة</button>
+                            <button className="bg-orange-600 text-white px-4 py-1 rounded-full text-xs">متابعة</button>
                           </div>
                         </div>
                       </div>
@@ -802,7 +803,7 @@ export default function HomePage() {
               <a
                 href=""
                 rel="noopener noreferrer"
-                className="font-semibold text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                className="font-semibold text-orange-600 hover:text-orange-700 dark:text-orange-400 dark:hover:text-orange-300"
               >
                 Fikra Software
               </a>

@@ -114,8 +114,8 @@ export default function Navbar() {
 
   return (
     <nav className="sticky top-0 z-50 bg-white/15 dark:bg-gray-900/15 backdrop-blur-3xl border-b border-gray-200/20 dark:border-gray-700/20 shadow-xl">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                 <div className="flex justify-between items-center h-16 md:h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-0.5">
+                 <div className="flex justify-between items-center h-20 md:h-24">
           {/* Modern Logo */}
                      <Link to="/" onClick={handleLogoClick} className="flex items-center space-x-2 md:space-x-4 group logo-hover">
         
@@ -135,20 +135,33 @@ export default function Navbar() {
             {/* Theme Toggle */}
             <button
               onClick={toggleDarkMode}
-              className="p-2.5 md:p-3 rounded-xl bg-gradient-to-r from-orange-100 to-orange-200 dark:from-orange-800 dark:to-orange-700 hover:from-orange-200 hover:to-orange-300 dark:hover:from-orange-700 dark:hover:to-orange-600 transition-all duration-300 group shadow-lg hover:shadow-xl border border-orange-200 dark:border-orange-600"
+              className="relative w-16 h-8 rounded-full bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl border border-orange-300 dark:border-orange-600 overflow-hidden"
             >
-              {darkMode ? (
-                <FaSun className="w-4 h-4 md:w-5 md:h-5 text-orange-600 dark:text-orange-300 group-hover:scale-110 transition-transform duration-300" />
-              ) : (
-                <FaMoon className="w-4 h-4 md:w-5 md:h-5 text-orange-700 dark:text-orange-300 group-hover:scale-110 transition-transform duration-300" />
-              )}
+              {/* Sun Icon (Left side) */}
+              <div className={`absolute left-1 top-1/2 transform -translate-y-1/2 transition-all duration-300 ${darkMode ? 'opacity-40' : 'opacity-100'}`}>
+                <FaSun className="w-4 h-4 text-white" />
+              </div>
+              
+              {/* Moon Icon (Right side) */}
+              <div className={`absolute right-1 top-1/2 transform -translate-y-1/2 transition-all duration-300 ${darkMode ? 'opacity-100' : 'opacity-40'}`}>
+                <FaMoon className="w-4 h-4 text-white" />
+              </div>
+              
+              {/* Toggle Thumb */}
+              <div className={`absolute top-1 w-6 h-6 bg-white rounded-full border-2 border-orange-400 transition-all duration-300 transform ${darkMode ? 'translate-x-8' : 'translate-x-1'}`}>
+                {darkMode ? (
+                  <FaMoon className="w-3 h-3 text-orange-500 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                ) : (
+                  <FaSun className="w-3 h-3 text-orange-500 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" />
+                )}
+              </div>
             </button>
 
             {/* Sign Up Button - ONLY show when NO user is logged in */}
             {!user?.fullName && (
               <Link
                 to="/signup"
-                className="px-2 py-1 md:px-4 md:py-2 bg-gradient-to-r from-orange-500 via-orange-600 to-yellow-500 hover:from-orange-600 hover:via-orange-700 hover:to-yellow-600 text-white rounded-lg font-semibold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl border border-orange-400/50"
+                className="px-3 py-2 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white rounded-lg font-medium text-sm transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg border border-orange-300/30"
               >
                 سجل الآن
               </Link>
@@ -157,7 +170,7 @@ export default function Navbar() {
 {!user?.fullName && (
               <Link
                 to="/login"
-                className="px-2 py-1 md:px-4 md:py-2 bg-gradient-to-r from-orange-500 via-orange-600 to-yellow-500 hover:from-orange-600 hover:via-orange-700 hover:to-yellow-600 text-white rounded-lg font-semibold text-sm transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl border border-orange-400/50"
+                className="px-3 py-2 bg-gradient-to-r from-orange-400 to-orange-500 hover:from-orange-500 hover:to-orange-600 text-white rounded-lg font-medium text-sm transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg border border-orange-300/30"
               >
                 تسجيل الدخول
               </Link>
@@ -165,13 +178,15 @@ export default function Navbar() {
 
             {/* Menu Button - Visible on all devices */}
             <div className="flex items-center space-x-3">  
-              {/* Burger Menu Button */}
-              <button
-                onClick={toggleMenu}
-                className="p-2.5 md:p-3 rounded-xl bg-gradient-to-r from-orange-100 to-orange-200 dark:from-orange-800 dark:to-orange-700 hover:from-orange-200 hover:to-orange-300 dark:hover:from-orange-700 dark:hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl border border-orange-200 dark:border-orange-600"
-              >
-                <FaBars className="w-4 h-4 md:w-5 md:h-5 text-orange-700 dark:text-orange-300" />
-              </button>
+              {/* Burger Menu Button - ONLY show when user is logged in */}
+              {user?.fullName && (
+                <button
+                  onClick={toggleMenu}
+                  className="p-2.5 md:p-3 rounded-xl bg-gradient-to-r from-orange-100 to-orange-200 dark:from-orange-800 dark:to-orange-700 hover:from-orange-200 hover:to-orange-300 dark:hover:from-orange-700 dark:hover:to-orange-600 transition-all duration-300 shadow-lg hover:shadow-xl border border-orange-200 dark:border-orange-600"
+                >
+                  <FaBars className="w-4 h-4 md:w-5 md:h-5 text-orange-700 dark:text-orange-300" />
+                </button>
+              )}
             </div>
           </div>
         </div>
