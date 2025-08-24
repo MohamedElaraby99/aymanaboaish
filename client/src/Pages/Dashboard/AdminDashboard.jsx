@@ -380,7 +380,7 @@ export default function AdminDashboard() {
           <div className="relative z-10 container mx-auto">
             {/* Header */}
             <div className="text-center mb-12">
-              <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 dark:from-blue-400 dark:via-purple-400 dark:to-indigo-400 mb-4">
+              <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-orange-600 to-indigo-600 dark:from-blue-400 dark:via-orange-400 dark:to-indigo-400 mb-4">
                 لوحة تحكم الإدارة
               </h1>
               <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
