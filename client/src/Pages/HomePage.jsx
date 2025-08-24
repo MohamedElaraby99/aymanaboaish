@@ -202,6 +202,113 @@ export default function HomePage() {
       {/* Hero Section - Clean & Modern RTL */}
       <AnimatedHero onGetStarted={onGetStarted} />
 
+      {/* Features Section - What You'll Find on the Platform */}
+      <section className="py-20 bg-white dark:bg-gray-800" dir="rtl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Yellow Strip */}
+          <div className="w-full h-2 bg-yellow-400 mb-8"></div>
+          
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
+              إيه اللي هتلاقيه على المنصة؟
+            </h2>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Feature 1 - Periodic Follow-up */}
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 relative">
+              <div className="absolute top-4 right-4">
+                <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+                  <FaChartLine className="text-white text-xl" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-right pr-16">
+                متابعة دورية وتقييم مستمر
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-right leading-relaxed">
+                تقدمك بيتراجع أسبوعياً، وبنقدملك توصيات حسب احتياجك، ومتابعة أول بأول.
+              </p>
+            </div>
+
+            {/* Feature 2 - Exam Models */}
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 relative">
+              <div className="absolute top-4 right-4">
+                <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+                  <FaAward className="text-white text-xl" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-right pr-16">
+                نماذج امتحانات بنفس النظام
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-right leading-relaxed">
+                امتحانات تفاعلية بنفس شكل امتحانات الثانوية العامة، عشان تعيش جو الامتحان على المنصة.
+              </p>
+            </div>
+
+            {/* Feature 3 - Simplified Explanation */}
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 relative">
+              <div className="absolute top-4 right-4">
+                <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+                  <FaComments className="text-white text-xl" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-right pr-16">
+                شرح مبسط ومركز
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-right leading-relaxed">
+                شرح النظريات والمفاهيم زي ما بتفهمها في حياتك اليومية، بعيد عن التعقيد الأكاديمي.
+              </p>
+            </div>
+
+            {/* Feature 4 - Focused Review Videos */}
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 relative">
+              <div className="absolute top-4 right-4">
+                <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+                  <FaClock className="text-white text-xl" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-right pr-16">
+                فيديوهات مراجعة مركزة ليالي الامتحان
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-right leading-relaxed">
+                فيديوهات مراجعة قصيرة مركزة على أهم النقاط اللي محتاج تذاكرها قبل ما تدخل قاعة الامتحان.
+              </p>
+            </div>
+
+            {/* Feature 5 - Direct Interaction */}
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 relative">
+              <div className="absolute top-4 right-4">
+                <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+                  <FaComments className="text-white text-xl" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-right pr-16">
+                تفاعل مباشر مع المدرسين
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-right leading-relaxed">
+                أي استفسار أو نقطة مش واضحة تسأل عنها وإحنا هنرد عليها بشكل فوري، وكده مش هتحس إنك لوحدك.
+              </p>
+            </div>
+
+            {/* Feature 6 - Organized Study Plan */}
+            <div className="bg-gray-100 dark:bg-gray-700 rounded-lg p-6 relative">
+              <div className="absolute top-4 right-4">
+                <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
+                  <FaGraduationCap className="text-white text-xl" />
+                </div>
+              </div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 text-right pr-16">
+                خطة مذاكرة منظمة
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300 text-right leading-relaxed">
+                المنصة بتديك جدول مذاكرة جاهز حسب وقتك ومستواك، عشان تذاكر بتركيز وراحة.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Featured Subjects Section */}
       <section className="py-20 bg-gray-50 dark:bg-gray-900" dir="rtl">
