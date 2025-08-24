@@ -38,7 +38,7 @@ const userSchema = new Schema({
     phoneNumber: {
         type: String,
         required: function() {
-            return this.role !== 'ADMIN';
+            return !['ADMIN', 'SUPER_ADMIN'].includes(this.role);
         },
         trim: true
     },
@@ -50,7 +50,7 @@ const userSchema = new Schema({
     governorate: {
         type: String,
         required: function() {
-            return this.role !== 'ADMIN';
+            return !['ADMIN', 'SUPER_ADMIN'].includes(this.role);
         },
         trim: true
     },
@@ -59,13 +59,13 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Stage',
         required: function() {
-            return this.role !== 'ADMIN';
+            return !['ADMIN', 'SUPER_ADMIN'].includes(this.role);
         }
     },
     age: {
         type: Number,
         required: function() {
-            return this.role !== 'ADMIN';
+            return !['ADMIN', 'SUPER_ADMIN'].includes(this.role);
         },
         min: [5, 'Age must be at least 5'],
         max: [100, 'Age cannot exceed 100']
@@ -81,7 +81,12 @@ const userSchema = new Schema({
     role: {
         type: String,
         default: 'USER',
-        enum: ['USER', 'ADMIN']
+        enum: ['USER', 'ADMIN', 'SUPER_ADMIN']
+    },
+    adminPermissions: {
+        type: [String],
+        default: [],
+        enum: ['CREATE_ADMIN', 'DELETE_ADMIN', 'MANAGE_USERS', 'MANAGE_COURSES', 'MANAGE_PAYMENTS', 'VIEW_ANALYTICS']
     },
     isActive: {
         type: Boolean,

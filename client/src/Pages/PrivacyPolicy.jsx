@@ -5,11 +5,11 @@ import { FaShieldAlt, FaDatabase, FaEye, FaLock, FaUserSecret, FaInfoCircle, FaC
 export default function PrivacyPolicy() {
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="min-h-screen bg-gradient-to-br from-orange-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="mx-auto h-16 w-16 bg-gradient-to-r from-purple-600 to-blue-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
+            <div className="mx-auto h-16 w-16 bg-gradient-to-r from-orange-600 to-blue-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
               <FaShieldAlt className="h-8 w-8 text-white" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -30,7 +30,7 @@ export default function PrivacyPolicy() {
               {/* Introduction */}
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                  <FaInfoCircle className="ml-3 text-purple-600" />
+                  <FaInfoCircle className="ml-3 text-orange-600" />
                   مقدمة
                 </h2>
                 <p className="text-gray-700 dark:text-gray-300 mb-4">
@@ -201,7 +201,7 @@ export default function PrivacyPolicy() {
               {/* Information Sharing */}
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                  <FaUserSecret className="ml-3 text-purple-600" />
+                  <FaUserSecret className="ml-3 text-orange-600" />
                   مشاركة المعلومات
                 </h2>
                 <div className="space-y-4">

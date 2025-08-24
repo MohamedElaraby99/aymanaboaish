@@ -221,12 +221,12 @@ export default function StageDashboard() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600 dark:text-gray-400">إجمالي المواد</p>
-                  <p className="text-2xl font-bold text-purple-600">
+                  <p className="text-2xl font-bold text-orange-600">
                     {stagesWithStats.reduce((sum, stage) => sum + (stage.subjectsCount || 0), 0)}
                   </p>
                 </div>
-                <div className="p-3 bg-purple-100 dark:bg-purple-900 rounded-full">
-                  <FaBook className="text-purple-600 dark:text-purple-400" size={20} />
+                <div className="p-3 bg-orange-100 dark:bg-orange-900 rounded-full">
+                  <FaBook className="text-orange-600 dark:text-orange-400" size={20} />
                 </div>
               </div>
             </div>
@@ -321,7 +321,7 @@ export default function StageDashboard() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center space-x-4 space-x-reverse">
                             <div className="flex items-center text-sm text-gray-900 dark:text-white">
-                              <FaBook className="mr-1 text-purple-500" />
+                              <FaBook className="mr-1 text-orange-500" />
                               {stagesWithStats.find(s => s._id === stage._id)?.subjectsCount || 0}
                             </div>
                             <div className="flex items-center text-sm text-gray-900 dark:text-white">

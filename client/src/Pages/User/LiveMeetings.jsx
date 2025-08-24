@@ -162,7 +162,7 @@ const LiveMeetings = () => {
           <span className="text-sm">{formatTime(meeting.scheduledDate)} ({getDuration(meeting.duration)})</span>
         </div>
         <div className="flex items-center text-gray-600 dark:text-gray-300">
-          <FaChalkboardTeacher className="ml-2 text-purple-500" />
+          <FaChalkboardTeacher className="ml-2 text-orange-500" />
           <span className="text-sm">{meeting.instructor?.name}</span>
         </div>
         <div className="flex items-center text-gray-600 dark:text-gray-300">
@@ -381,7 +381,7 @@ const LiveMeetings = () => {
                       <span className="text-gray-600 dark:text-gray-300">{formatTime(selectedMeeting.scheduledDate)} ({getDuration(selectedMeeting.duration)})</span>
                     </div>
                     <div className="flex items-center">
-                      <FaChalkboardTeacher className="ml-3 text-purple-500" />
+                      <FaChalkboardTeacher className="ml-3 text-orange-500" />
                       <span className="text-gray-600 dark:text-gray-300">{selectedMeeting.instructor?.name}</span>
                     </div>
                     <div className="flex items-center">

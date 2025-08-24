@@ -5,11 +5,11 @@ import { FaShieldAlt, FaUserCheck, FaHandshake, FaExclamationTriangle, FaCheckCi
 export default function TermsOfService() {
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="mx-auto h-16 w-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
+            <div className="mx-auto h-16 w-16 bg-gradient-to-r from-blue-600 to-orange-600 rounded-full flex items-center justify-center mb-6 shadow-lg">
               <FaShieldAlt className="h-8 w-8 text-white" />
             </div>
             <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
@@ -136,7 +136,7 @@ export default function TermsOfService() {
               {/* Acceptable Use */}
               <section className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
-                  <FaHandshake className="ml-3 text-purple-600" />
+                  <FaHandshake className="ml-3 text-orange-600" />
                   الاستخدام المقبول
                 </h2>
                 <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">

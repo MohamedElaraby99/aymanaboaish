@@ -1394,7 +1394,7 @@ const CourseContentManager = () => {
 
   return (
     <Layout>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col md:flex-row" dir="rtl">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 flex flex-col md:flex-row" dir="rtl">
         {/* Sidebar: Course List */}
         <div className="w-full md:w-1/3 lg:w-1/4 bg-white dark:bg-gray-900 border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-800 p-3 md:p-4 flex flex-col">
           <div className="mb-4 flex flex-col gap-2">
@@ -1474,9 +1474,9 @@ const CourseContentManager = () => {
 
                {/* درس */}
                {selectedCourse.directLessons?.length > 0 && (
-                <div className="bg-purple-50 dark:bg-purple-900/20 rounded-xl shadow p-3 md:p-4">
-                  <div className="font-semibold text-purple-700 dark:text-purple-300 mb-2 flex items-center gap-2 text-right">
-                    <FaBookOpen className="text-purple-500" />
+                <div className="bg-orange-50 dark:bg-orange-900/20 rounded-xl shadow p-3 md:p-4">
+                  <div className="font-semibold text-orange-700 dark:text-orange-300 mb-2 flex items-center gap-2 text-right">
+                    <FaBookOpen className="text-orange-500" />
                     مقدمة
                   </div>
                   {selectedCourse.directLessons.map(lesson => (

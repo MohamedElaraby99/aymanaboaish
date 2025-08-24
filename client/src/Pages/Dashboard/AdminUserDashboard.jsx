@@ -109,6 +109,11 @@ export default function AdminUserDashboard() {
     const [activeTab, setActiveTab] = useState("users");
     const [stages, setStages] = useState([]);
 
+    // Check if current user can create admin users
+    const canCreateAdmin = user && (user.role === 'SUPER_ADMIN');
+    const canDeleteAdmin = user && (user.role === 'SUPER_ADMIN');
+    const canChangeRoleToAdmin = user && (user.role === 'SUPER_ADMIN');
+
     // Fetch stages on component mount
     useEffect(() => {
         const fetchStages = async () => {
@@ -408,9 +413,13 @@ export default function AdminUserDashboard() {
     };
 
     const getRoleColor = (role) => {
-        return role === 'ADMIN' 
-            ? 'text-purple-600 bg-purple-50 dark:bg-purple-900/20' 
-            : 'text-blue-600 bg-blue-50 dark:bg-blue-900/20';
+        if (role === 'SUPER_ADMIN') {
+            return 'text-red-600 bg-red-50 dark:bg-red-900/20';
+        } else if (role === 'ADMIN') {
+            return 'text-orange-600 bg-orange-50 dark:bg-orange-900/20';
+        } else {
+            return 'text-blue-600 bg-blue-50 dark:bg-blue-900/20';
+        }
     };
 
     const getTransactionIcon = (type) => {
@@ -428,11 +437,11 @@ export default function AdminUserDashboard() {
 
     return (
         <Layout>
-            <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8" dir="rtl">
+            <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 py-8" dir="rtl">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Header */}
                     <div className="text-center mb-8">
-                        <div className="mx-auto h-16 w-16 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
+                        <div className="mx-auto h-16 w-16 bg-gradient-to-r from-indigo-600 to-orange-600 rounded-full flex items-center justify-center mb-4 shadow-lg">
                             <FaUsers className="h-8 w-8 text-white" />
                         </div>
                         <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
@@ -443,68 +452,82 @@ export default function AdminUserDashboard() {
                         </p>
                     </div>
 
-                    {/* Statistics Cards */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
-                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
-                            <div className="flex items-center">
-                                <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/20">
-                                    <FaUsers className="h-6 w-6 text-blue-600" />
-                                </div>
-                                <div className="mr-4">
-                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">إجمالي المستخدمين</p>
-                                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalUsers}</p>
+                    {/* Statistics Cards - Only visible to SUPER_ADMIN */}
+                    {role === "SUPER_ADMIN" && (
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8">
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
+                                <div className="flex items-center">
+                                    <div className="p-3 rounded-full bg-blue-100 dark:bg-blue-900/20">
+                                        <FaUsers className="h-6 w-6 text-blue-600" />
+                                    </div>
+                                    <div className="mr-4">
+                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">إجمالي المستخدمين</p>
+                                        <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalUsers}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
-                            <div className="flex items-center">
-                                <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/20">
-                                    <FaUserCheck className="h-6 w-6 text-green-600" />
-                                </div>
-                                <div className="mr-4">
-                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">المستخدمون النشطون</p>
-                                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.activeUsers}</p>
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
+                                <div className="flex items-center">
+                                    <div className="p-3 rounded-full bg-green-100 dark:bg-green-900/20">
+                                        <FaUserCheck className="h-6 w-6 text-green-600" />
+                                    </div>
+                                    <div className="mr-4">
+                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">المستخدمون النشطون</p>
+                                        <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.activeUsers}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
-                            <div className="flex items-center">
-                                <div className="p-3 rounded-full bg-red-100 dark:bg-red-900/20">
-                                    <FaUserTimes className="h-6 w-6 text-red-600" />
-                                </div>
-                                <div className="mr-4">
-                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">المستخدمون غير النشطين</p>
-                                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.inactiveUsers}</p>
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
+                                <div className="flex items-center">
+                                    <div className="p-3 rounded-full bg-red-100 dark:bg-red-900/20">
+                                        <FaUserTimes className="h-6 w-6 text-red-600" />
+                                    </div>
+                                    <div className="mr-4">
+                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">المستخدمون غير النشطين</p>
+                                        <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.inactiveUsers}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
-                            <div className="flex items-center">
-                                <div className="p-3 rounded-full bg-purple-100 dark:bg-purple-900/20">
-                                    <FaCrown className="h-6 w-6 text-purple-600" />
-                                </div>
-                                <div className="mr-4">
-                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">المديرون</p>
-                                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.adminUsers}</p>
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
+                                <div className="flex items-center">
+                                    <div className="p-3 rounded-full bg-orange-100 dark:bg-orange-900/20">
+                                        <FaCrown className="h-6 w-6 text-orange-600" />
+                                    </div>
+                                    <div className="mr-4">
+                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">المديرون</p>
+                                        <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.adminUsers}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
-                            <div className="flex items-center">
-                                <div className="p-3 rounded-full bg-indigo-100 dark:bg-indigo-900/20">
-                                    <FaUser className="h-6 w-6 text-indigo-600" />
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
+                                <div className="flex items-center">
+                                    <div className="p-3 rounded-full bg-red-100 dark:bg-red-900/20">
+                                        <FaUserSecret className="h-6 w-6 text-red-600" />
+                                    </div>
+                                    <div className="mr-4">
+                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">المديرون المميزون</p>
+                                        <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.superAdminUsers || 0}</p>
+                                    </div>
                                 </div>
-                                <div className="mr-4">
-                                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">الطلاب</p>
-                                    <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.regularUsers}</p>
+                            </div>
+
+                            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 border border-gray-100 dark:border-gray-700">
+                                <div className="flex items-center">
+                                    <div className="p-3 rounded-full bg-indigo-100 dark:bg-indigo-900/20">
+                                        <FaUser className="h-6 w-6 text-indigo-600" />
+                                    </div>
+                                    <div className="mr-4">
+                                        <p className="text-sm font-medium text-gray-600 dark:text-gray-400">الطلاب</p>
+                                        <p className="text-2xl font-bold text-gray-900 dark:text-white">{stats.regularUsers}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    )}
 
                     {/* Tabs */}
                     <div className="flex space-x-4 space-x-reverse mb-6">
@@ -523,7 +546,7 @@ export default function AdminUserDashboard() {
                             onClick={() => setActiveTab("admins")}
                             className={`px-6 py-3 rounded-lg font-medium transition-colors ${
                                 activeTab === "admins"
-                                    ? "bg-purple-600 text-white"
+                                    ? "bg-orange-600 text-white"
                                     : "bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600"
                             }`}
                         >
@@ -692,7 +715,7 @@ export default function AdminUserDashboard() {
                                                                 {user.fullName}
                                                             </h4>
                                                             <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getRoleColor(user.role)}`}>
-                                                                {user.role}
+                                                                {user.role === 'SUPER_ADMIN' ? 'مدير مميز' : user.role === 'ADMIN' ? 'مدير' : 'مستخدم'}
                                                             </span>
                                                         </div>
                                                         <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -721,13 +744,15 @@ export default function AdminUserDashboard() {
                                                     >
                                                         {user.isActive ? <FaToggleOn /> : <FaToggleOff />}
                                                     </button>
-                                                    <button
-                                                        onClick={() => handleUpdateRole(user.id, user.role === 'ADMIN' ? 'USER' : 'ADMIN')}
-                                                        className="p-2 text-gray-500 hover:text-purple-600 transition-colors"
-                                                        title="تغيير الدور"
-                                                    >
-                                                        <FaUserCog />
-                                                    </button>
+                                                    {canChangeRoleToAdmin && (
+                                                        <button
+                                                            onClick={() => handleUpdateRole(user.id, user.role === 'ADMIN' ? 'USER' : 'ADMIN')}
+                                                            className="p-2 text-gray-500 hover:text-orange-600 transition-colors"
+                                                            title="تغيير الدور"
+                                                        >
+                                                            <FaUserCog />
+                                                        </button>
+                                                    )}
                                                     <button
                                                         onClick={() => handleResetUserWallet(user.id, user.fullName)}
                                                         className="p-2 text-gray-500 hover:text-orange-600 transition-colors"
@@ -735,17 +760,19 @@ export default function AdminUserDashboard() {
                                                     >
                                                         <FaWallet />
                                                     </button>
-                                                    <button
-                                                        onClick={() => {
-                                                            setUserToDelete(user.id);
-                                                            setUserToDeleteInfo(user);
-                                                            setShowDeleteConfirm(true);
-                                                        }}
-                                                        className="p-2 text-gray-500 hover:text-red-600 transition-colors"
-                                                        title="حذف المستخدم"
-                                                    >
-                                                        <FaTrash />
-                                                    </button>
+                                                    {(user.role !== 'ADMIN' || canDeleteAdmin) && (
+                                                        <button
+                                                            onClick={() => {
+                                                                setUserToDelete(user.id);
+                                                                setUserToDeleteInfo(user);
+                                                                setShowDeleteConfirm(true);
+                                                            }}
+                                                            className="p-2 text-gray-500 hover:text-red-600 transition-colors"
+                                                            title="حذف المستخدم"
+                                                        >
+                                                            <FaTrash />
+                                                        </button>
+                                                    )}
                                                 </div>
                                             </div>
                                         ))}
@@ -822,7 +849,7 @@ export default function AdminUserDashboard() {
                                                     console.log('Filter button clicked (admins)!');
                                                     handleApplyFilters();
                                                 }}
-                                                className="w-full px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg text-sm transition-colors"
+                                                className="w-full px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg text-sm transition-colors"
                                             >
                                                 <FaFilter className="inline mr-2" />
                                                 تطبيق المرشحات
@@ -834,7 +861,7 @@ export default function AdminUserDashboard() {
                                 {/* Admins List */}
                                 {loading ? (
                                     <div className="flex justify-center items-center py-8">
-                                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
+                                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
                                     </div>
                                 ) : users.length === 0 ? (
                                     <div className="text-center py-8">
@@ -860,7 +887,7 @@ export default function AdminUserDashboard() {
                                                                 {user.fullName}
                                                             </h4>
                                                             <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getRoleColor(user.role)}`}>
-                                                                {user.role}
+                                                                {user.role === 'SUPER_ADMIN' ? 'مدير مميز' : user.role === 'ADMIN' ? 'مدير' : 'مستخدم'}
                                                             </span>
                                                         </div>
                                                         <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -889,13 +916,15 @@ export default function AdminUserDashboard() {
                                                     >
                                                         {user.isActive ? <FaToggleOn /> : <FaToggleOff />}
                                                     </button>
-                                                    <button
-                                                        onClick={() => handleUpdateRole(user.id, user.role === 'ADMIN' ? 'USER' : 'ADMIN')}
-                                                        className="p-2 text-gray-500 hover:text-purple-600 transition-colors"
-                                                        title="تغيير الدور"
-                                                    >
-                                                        <FaUserCog />
-                                                    </button>
+                                                    {canChangeRoleToAdmin && (
+                                                        <button
+                                                            onClick={() => handleUpdateRole(user.id, user.role === 'ADMIN' ? 'USER' : 'ADMIN')}
+                                                            className="p-2 text-gray-500 hover:text-orange-600 transition-colors"
+                                                            title="تغيير الدور"
+                                                        >
+                                                            <FaUserCog />
+                                                        </button>
+                                                    )}
                                                     <button
                                                         onClick={() => handleResetUserWallet(user.id, user.fullName)}
                                                         className="p-2 text-gray-500 hover:text-orange-600 transition-colors"
@@ -903,6 +932,19 @@ export default function AdminUserDashboard() {
                                                     >
                                                         <FaWallet />
                                                     </button>
+                                                    {(user.role !== 'ADMIN' || canDeleteAdmin) && (
+                                                        <button
+                                                            onClick={() => {
+                                                                setUserToDelete(user.id);
+                                                                setUserToDeleteInfo(user);
+                                                                setShowDeleteConfirm(true);
+                                                            }}
+                                                            className="p-2 text-gray-500 hover:text-red-600 transition-colors"
+                                                            title="حذف المستخدم"
+                                                        >
+                                                            <FaTrash />
+                                                        </button>
+                                                    )}
                                                 </div>
                                             </div>
                                         ))}
@@ -1023,7 +1065,7 @@ export default function AdminUserDashboard() {
                                                                 {user.fullName}
                                                             </h4>
                                                             <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${getRoleColor(user.role)}`}>
-                                                                {user.role}
+                                                                {user.role === 'SUPER_ADMIN' ? 'مدير مميز' : user.role === 'ADMIN' ? 'مدير' : 'مستخدم'}
                                                             </span>
                                                         </div>
                                                         <p className="text-sm text-gray-500 dark:text-gray-400">
@@ -1052,13 +1094,15 @@ export default function AdminUserDashboard() {
                                                     >
                                                         {user.isActive ? <FaToggleOn /> : <FaToggleOff />}
                                                     </button>
-                                                    <button
-                                                        onClick={() => handleUpdateRole(user.id, user.role === 'ADMIN' ? 'USER' : 'ADMIN')}
-                                                        className="p-2 text-gray-500 hover:text-purple-600 transition-colors"
-                                                        title="تغيير الدور"
-                                                    >
-                                                        <FaUserCog />
-                                                    </button>
+                                                    {canChangeRoleToAdmin && (
+                                                        <button
+                                                            onClick={() => handleUpdateRole(user.id, user.role === 'ADMIN' ? 'USER' : 'ADMIN')}
+                                                            className="p-2 text-gray-500 hover:text-orange-600 transition-colors"
+                                                            title="تغيير الدور"
+                                                        >
+                                                            <FaUserCog />
+                                                        </button>
+                                                    )}
                                                     <button
                                                         onClick={() => handleResetUserWallet(user.id, user.fullName)}
                                                         className="p-2 text-gray-500 hover:text-orange-600 transition-colors"
@@ -1066,17 +1110,19 @@ export default function AdminUserDashboard() {
                                                     >
                                                         <FaWallet />
                                                     </button>
-                                                    <button
-                                                        onClick={() => {
-                                                            setUserToDelete(user.id);
-                                                            setUserToDeleteInfo(user);
-                                                            setShowDeleteConfirm(true);
-                                                        }}
-                                                        className="p-2 text-gray-500 hover:text-red-600 transition-colors"
-                                                        title="حذف المستخدم"
-                                                    >
-                                                        <FaTrash />
-                                                    </button>
+                                                    {(user.role !== 'ADMIN' || canDeleteAdmin) && (
+                                                        <button
+                                                            onClick={() => {
+                                                                setUserToDelete(user.id);
+                                                                setUserToDeleteInfo(user);
+                                                                setShowDeleteConfirm(true);
+                                                            }}
+                                                            className="p-2 text-gray-500 hover:text-red-600 transition-colors"
+                                                            title="حذف المستخدم"
+                                                        >
+                                                            <FaTrash />
+                                                        </button>
+                                                    )}
                                                 </div>
                                             </div>
                                         ))}
@@ -1147,18 +1193,21 @@ export default function AdminUserDashboard() {
                                             />
                                             طالب (USER)
                                         </label>
-                                        <label className="flex items-center">
-                                            <input
-                                                type="radio"
-                                                name="role"
-                                                value="ADMIN"
-                                                checked={createUserForm.role === 'ADMIN'}
-                                                onChange={(e) => setCreateUserForm({...createUserForm, role: e.target.value})}
-                                                className="ml-2"
-                                            />
-                                            مدير (ADMIN)
-                                        </label>
+                                        {canCreateAdmin && (
+                                            <label className="flex items-center">
+                                                <input
+                                                    type="radio"
+                                                    name="role"
+                                                    value="ADMIN"
+                                                    checked={createUserForm.role === 'ADMIN'}
+                                                    onChange={(e) => setCreateUserForm({...createUserForm, role: e.target.value})}
+                                                    className="ml-2"
+                                                />
+                                                مدير (ADMIN)
+                                            </label>
+                                        )}
                                     </div>
+                               
                                 </div>
 
                                 {/* Basic Information */}
@@ -1363,12 +1412,14 @@ export default function AdminUserDashboard() {
                                             {userToDeleteInfo.email}
                                         </p>
                                         <p className="text-sm text-gray-600 dark:text-gray-400">
-                                            الدور: {userToDeleteInfo.role === 'ADMIN' ? 'مدير' : 'مستخدم'}
+                                            الدور: {userToDeleteInfo.role === 'SUPER_ADMIN' ? 'مدير مميز' : userToDeleteInfo.role === 'ADMIN' ? 'مدير' : 'مستخدم'}
                                         </p>
                                     </div>
                                 )}
                                 <p className="text-gray-600 dark:text-gray-300">
-                                    {userToDeleteInfo?.role === 'ADMIN' 
+                                    {userToDeleteInfo?.role === 'SUPER_ADMIN' 
+                                        ? 'هل أنت متأكد من حذف هذا المدير المميز؟ هذا الإجراء لا يمكن التراجع عنه.'
+                                        : userToDeleteInfo?.role === 'ADMIN' 
                                         ? 'هل أنت متأكد من حذف هذا المدير؟ هذا الإجراء لا يمكن التراجع عنه.'
                                         : 'هل أنت متأكد من حذف هذا المستخدم؟ هذا الإجراء لا يمكن التراجع عنه.'
                                     }
@@ -1376,6 +1427,11 @@ export default function AdminUserDashboard() {
                                 {userToDeleteInfo?.role === 'ADMIN' && (
                                     <p className="text-sm text-orange-600 dark:text-orange-400 mt-2">
                                         ⚠️ تحذير: حذف مدير قد يؤثر على إدارة النظام
+                                    </p>
+                                )}
+                                {userToDeleteInfo?.role === 'SUPER_ADMIN' && (
+                                    <p className="text-sm text-red-600 dark:text-red-400 mt-2">
+                                        🚨 تحذير خطير: حذف مدير مميز قد يؤثر بشكل كبير على إدارة النظام
                                     </p>
                                 )}
                             </div>
@@ -1408,7 +1464,7 @@ export default function AdminUserDashboard() {
                             <div className="p-6 border-b border-gray-200 dark:border-gray-700">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center space-x-4">
-                                        <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                                        <div className="w-16 h-16 bg-gradient-to-r from-blue-600 to-orange-600 rounded-full flex items-center justify-center">
                                             <span className="text-white text-2xl font-bold">
                                                 {selectedUser.fullName?.charAt(0)?.toUpperCase() || "U"}
                                             </span>
@@ -1422,7 +1478,7 @@ export default function AdminUserDashboard() {
                                             </p>
                                             <div className="flex items-center space-x-2 mt-2">
                                                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getRoleColor(selectedUser.role)}`}>
-                                                    {selectedUser.role === 'ADMIN' ? 'مدير' : 'مستخدم'}
+                                                    {selectedUser.role === 'SUPER_ADMIN' ? 'مدير مميز' : selectedUser.role === 'ADMIN' ? 'مدير' : 'مستخدم'}
                                                 </span>
                                                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(selectedUser.isActive)}`}>
                                                     {selectedUser.isActive ? 'نشط' : 'غير نشط'}
@@ -1502,12 +1558,12 @@ export default function AdminUserDashboard() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="bg-purple-50 dark:bg-purple-900/20 p-4 rounded-xl border border-purple-200 dark:border-purple-800">
+                                        <div className="bg-orange-50 dark:bg-orange-900/20 p-4 rounded-xl border border-orange-200 dark:border-orange-800">
                                             <div className="flex items-center space-x-3">
-                                                <FaGraduationCap className="text-purple-600 text-xl" />
+                                                <FaGraduationCap className="text-orange-600 text-xl" />
                                                 <div>
-                                                    <p className="text-sm text-purple-600 dark:text-purple-400">الكورسات المشتراة</p>
-                                                    <p className="text-lg font-bold text-purple-900 dark:text-purple-100">
+                                                    <p className="text-sm text-orange-600 dark:text-orange-400">الكورسات المشتراة</p>
+                                                    <p className="text-lg font-bold text-orange-900 dark:text-orange-100">
                                                         {userStats.purchasedCourses || 0}
                                                     </p>
                                                 </div>
@@ -1662,24 +1718,30 @@ export default function AdminUserDashboard() {
                                 {/* Account Information */}
                                 <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
                                     <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center space-x-2">
-                                        <FaIdCard className="text-purple-600" />
+                                        <FaIdCard className="text-orange-600" />
                                         <span>معلومات الحساب</span>
                                     </h4>
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                         <div className="space-y-2">
                                             <label className="text-sm font-medium text-gray-600 dark:text-gray-400">نوع الحساب</label>
                                             {isEditing ? (
-                                                <select
-                                                    value={editForm.role}
-                                                    onChange={(e) => setEditForm({...editForm, role: e.target.value})}
-                                                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
-                                                >
-                                                    <option value="USER">مستخدم</option>
-                                                    <option value="ADMIN">مدير</option>
-                                                </select>
+                                                canChangeRoleToAdmin ? (
+                                                    <select
+                                                        value={editForm.role}
+                                                        onChange={(e) => setEditForm({...editForm, role: e.target.value})}
+                                                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                                                    >
+                                                        <option value="USER">مستخدم</option>
+                                                        <option value="ADMIN">مدير</option>
+                                                    </select>
+                                                ) : (
+                                                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getRoleColor(selectedUser.role)}`}>
+                                                        {selectedUser.role === 'SUPER_ADMIN' ? 'مدير مميز' : selectedUser.role === 'ADMIN' ? 'مدير' : 'مستخدم'}
+                                                    </span>
+                                                )
                                             ) : (
                                                 <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getRoleColor(selectedUser.role)}`}>
-                                                    {selectedUser.role === 'ADMIN' ? 'مدير' : 'مستخدم'}
+                                                    {selectedUser.role === 'SUPER_ADMIN' ? 'مدير مميز' : selectedUser.role === 'ADMIN' ? 'مدير' : 'مستخدم'}
                                                 </span>
                                             )}
                                         </div>
@@ -1840,23 +1902,27 @@ export default function AdminUserDashboard() {
                                     >
                                         {selectedUser.isActive ? 'إلغاء التفعيل' : 'تفعيل'}
                                     </button>
-                                    <button
-                                        onClick={() => handleUpdateRole(selectedUser.id, selectedUser.role === 'ADMIN' ? 'USER' : 'ADMIN')}
-                                        className="px-6 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg font-medium transition-colors"
-                                    >
-                                        تغيير الدور
-                                    </button>
-                                    <button
-                                        onClick={() => {
-                                            setUserToDelete(selectedUser.id);
-                                            setUserToDeleteInfo(selectedUser);
-                                            setShowDeleteConfirm(true);
-                                            setShowUserDetails(false);
-                                        }}
-                                        className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors"
-                                    >
-                                        حذف المستخدم
-                                    </button>
+                                    {canChangeRoleToAdmin && (
+                                        <button
+                                            onClick={() => handleUpdateRole(selectedUser.id, selectedUser.role === 'ADMIN' ? 'USER' : 'ADMIN')}
+                                            className="px-6 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded-lg font-medium transition-colors"
+                                        >
+                                            تغيير الدور
+                                        </button>
+                                    )}
+                                    {(user.role !== 'ADMIN' || canDeleteAdmin) && (
+                                        <button
+                                            onClick={() => {
+                                                setUserToDelete(selectedUser.id);
+                                                setUserToDeleteInfo(selectedUser);
+                                                setShowDeleteConfirm(true);
+                                                setShowUserDetails(false);
+                                            }}
+                                            className="px-6 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors"
+                                        >
+                                            حذف المستخدم
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </div>

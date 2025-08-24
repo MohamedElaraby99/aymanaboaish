@@ -546,7 +546,7 @@ const LiveMeetingDashboard = () => {
                             </button>
                             <button
                               onClick={() => window.open(meeting.googleMeetLink, '_blank')}
-                              className="text-purple-600 hover:text-purple-900 dark:text-purple-400 dark:hover:text-purple-300"
+                              className="text-orange-600 hover:text-orange-900 dark:text-orange-400 dark:hover:text-orange-300"
                               title="فتح الاجتماع"
                             >
                               <FaExternalLinkAlt />

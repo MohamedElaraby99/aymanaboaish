@@ -15,7 +15,7 @@ const router = express.Router();
 
 // All routes require admin authentication
 router.use(isLoggedIn);
-router.use(authorisedRoles('ADMIN'));
+router.use(authorisedRoles('ADMIN', 'SUPER_ADMIN'));
 
 // Get all exam results with filtering and pagination
 router.get('/', getAllExamResults);

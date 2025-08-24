@@ -439,7 +439,7 @@ export default function CourseDetail() {
       <div className="flex items-center gap-2">
         <button 
           onClick={() => handlePreviewClick(item, purchaseType)}
-          className="text-purple-600 hover:text-purple-700 flex items-center gap-1"
+          className="text-orange-600 hover:text-orange-700 flex items-center gap-1"
         >
           <FaEye />
           <span>معاينة</span>
@@ -527,7 +527,7 @@ export default function CourseDetail() {
                 </>
               ) : (
                 <>
-                  <div className="w-full h-full bg-gradient-to-br from-blue-500 to-purple-600"></div>
+                  <div className="w-full h-full bg-gradient-to-br from-blue-500 to-orange-600"></div>
                   <div className="absolute inset-0 bg-black bg-opacity-30"></div>
                   <div className="absolute inset-0 flex items-center justify-center">
                     <FaBookOpen className="text-8xl text-white opacity-80" />
@@ -536,7 +536,7 @@ export default function CourseDetail() {
               )}
               
               {/* Fallback gradient for broken images */}
-              <div className="hidden w-full h-full bg-gradient-to-br from-blue-500 to-purple-600">
+              <div className="hidden w-full h-full bg-gradient-to-br from-blue-500 to-orange-600">
                 <div className="absolute inset-0 bg-black bg-opacity-30"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <FaBookOpen className="text-8xl text-white opacity-80" />
@@ -572,7 +572,7 @@ export default function CourseDetail() {
                       <div className="text-sm text-gray-600 dark:text-gray-400">درس</div>
                     </div>
                     <div className="text-center p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                      <div className="text-2xl font-bold text-purple-600 mb-1">
+                      <div className="text-2xl font-bold text-orange-600 mb-1">
                         {currentCourse.units?.length || 0}
                       </div>
                       <div className="text-sm text-gray-600 dark:text-gray-400">وحدة</div>
@@ -698,7 +698,7 @@ export default function CourseDetail() {
            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-6">
              <div className={`border rounded-xl p-4 ${
                courseAccessState?.hasAccess 
-                 ? 'bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-blue-200 dark:border-blue-700'
+                 ? 'bg-gradient-to-r from-blue-50 to-orange-50 dark:from-blue-900/20 dark:to-orange-900/20 border-blue-200 dark:border-blue-700'
                  : 'bg-gradient-to-r from-red-50 to-orange-50 dark:from-red-900/20 dark:to-orange-900/20 border-red-200 dark:border-red-700'
              }`}>
                <div className="flex items-center justify-center gap-3">
@@ -785,7 +785,7 @@ export default function CourseDetail() {
                           onClick={() => toggleUnit(unit._id || unitIndex)}
                         >
                           <div className="flex items-center gap-3">
-                            <div className="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center">
+                            <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center">
                               <FaBookOpen className="text-white text-sm" />
                             </div>
                             <div>
@@ -1084,7 +1084,7 @@ export default function CourseDetail() {
                        </span>
                      </div>
                      <div className="flex items-center gap-2">
-                       <FaClipboardList className="text-purple-600" />
+                       <FaClipboardList className="text-orange-600" />
                        <span className="text-blue-700 dark:text-blue-300">
                          {previewItem.examsCount || 0} اختبار
                        </span>

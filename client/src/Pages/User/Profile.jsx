@@ -200,7 +200,7 @@ export default function Profile() {
           className="flex flex-col dark:bg-base-100 relative gap-7 rounded-lg md:py-10 py-7 md:px-7 px-3 md:w-[750px] w-full shadow-custom dark:shadow-xl  "
         >
           <div className="flex justify-center items-center">
-            <h1 className="text-center absolute left-6 md:top-auto top-5 text-violet-500 dark:text-purple-500 md:text-4xl text-3xl font-bold font-inter after:content-[' ']  after:absolute after:-bottom-3.5 after:left-0 after:h-1.5 after:w-[60%] after:rounded-full after:bg-yellow-400 dark:after:bg-yellow-600">
+            <h1 className="text-center absolute left-6 md:top-auto top-5 text-violet-500 dark:text-orange-500 md:text-4xl text-3xl font-bold font-inter after:content-[' ']  after:absolute after:-bottom-3.5 after:left-0 after:h-1.5 after:w-[60%] after:rounded-full after:bg-yellow-400 dark:after:bg-yellow-600">
               الملف الشخصي
             </h1>
             {/* avatar */}
@@ -303,7 +303,7 @@ export default function Profile() {
               {/* Username */}
               <div className="space-y-2">
                 <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-                  <FaUser className="text-purple-500" />
+                  <FaUser className="text-orange-500" />
                   اسم المستخدم
                 </label>
                 <input
@@ -360,7 +360,7 @@ export default function Profile() {
                   {/* Father's Phone Number */}
                   <div className="space-y-2">
                     <label className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
-                      <FaPhone className="text-purple-500" />
+                      <FaPhone className="text-orange-500" />
                       رقم هاتف الأب
                     </label>
                     <input

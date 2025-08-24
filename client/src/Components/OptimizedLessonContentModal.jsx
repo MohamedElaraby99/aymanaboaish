@@ -44,7 +44,7 @@ const OptimizedLessonContentModal = ({ isOpen, onClose, courseId, lessonId, unit
     switch (type) {
       case 'video': return <FaVideo className="text-blue-500" />;
       case 'pdf': return <FaFilePdf className="text-red-500" />;
-      case 'exam': return <FaClipboardList className="text-purple-500" />;
+      case 'exam': return <FaClipboardList className="text-orange-500" />;
       case 'training': return <FaDumbbell className="text-green-500" />;
       default: return null;
     }
@@ -303,14 +303,14 @@ const OptimizedLessonContentModal = ({ isOpen, onClose, courseId, lessonId, unit
   const renderExamContent = () => (
     <div className="space-y-4">
       {lesson.exams?.map((exam, index) => (
-        <div key={exam._id} className="bg-gradient-to-br from-purple-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 p-4 sm:p-6 rounded-xl border border-purple-200 dark:border-gray-700">
+        <div key={exam._id} className="bg-gradient-to-br from-orange-50 to-indigo-100 dark:from-gray-800 dark:to-gray-900 p-4 sm:p-6 rounded-xl border border-orange-200 dark:border-gray-700">
           <div className="flex items-center gap-3 mb-4">
-            <div className="p-2 bg-purple-100 dark:bg-purple-900 rounded-lg">
-              <FaClipboardList className="text-purple-600 dark:text-purple-400 text-lg sm:text-xl" />
+            <div className="p-2 bg-orange-100 dark:bg-orange-900 rounded-lg">
+              <FaClipboardList className="text-orange-600 dark:text-orange-400 text-lg sm:text-xl" />
             </div>
             <div className="flex-1 min-w-0">
               <div className="font-semibold text-lg sm:text-xl text-gray-800 dark:text-gray-200 break-words">{exam.title}</div>
-              <div className="text-sm text-purple-600 dark:text-purple-400 font-medium">امتحان </div>
+              <div className="text-sm text-orange-600 dark:text-orange-400 font-medium">امتحان </div>
             </div>
             {exam.userResult?.hasTaken && (
               <div className="text-right">
@@ -404,7 +404,7 @@ const OptimizedLessonContentModal = ({ isOpen, onClose, courseId, lessonId, unit
                      }
                      handleStartExam(exam, 'exam');
                    }}
-                   className="bg-purple-600 hover:bg-purple-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-200 hover:shadow-lg font-medium text-sm sm:text-base w-full sm:w-auto"
+                   className="bg-orange-600 hover:bg-orange-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg transition-all duration-200 hover:shadow-lg font-medium text-sm sm:text-base w-full sm:w-auto"
                    disabled={isAccessExpired}
                  >
                    بدء الامتحان
@@ -581,7 +581,7 @@ const OptimizedLessonContentModal = ({ isOpen, onClose, courseId, lessonId, unit
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 backdrop-blur-sm p-2 sm:p-4">
       <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-5xl max-h-[95vh] overflow-hidden relative">
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 sm:p-6 rounded-t-2xl">
+        <div className="bg-gradient-to-r from-blue-600 to-orange-600 text-white p-4 sm:p-6 rounded-t-2xl">
           <div className="flex items-start justify-between gap-3">
             <div className="flex-1 min-w-0">
               <h2 className="text-lg sm:text-xl md:text-2xl font-bold leading-tight break-words">{lesson.title}</h2>
@@ -616,7 +616,7 @@ const OptimizedLessonContentModal = ({ isOpen, onClose, courseId, lessonId, unit
             {[
               { key: 'video', label: 'الفيديوهات', icon: <FaVideo className="text-blue-500" />, count: lesson.videos?.length || 0 },
               { key: 'pdf', label: 'الملفات', icon: <FaFilePdf className="text-red-500" />, count: lesson.pdfs?.length || 0 },
-              { key: 'exam', label: 'الامتحانات', icon: <FaClipboardList className="text-purple-500" />, count: lesson.exams?.length || 0 },
+              { key: 'exam', label: 'الامتحانات', icon: <FaClipboardList className="text-orange-500" />, count: lesson.exams?.length || 0 },
               { key: 'training', label: 'التدريبات', icon: <FaDumbbell className="text-green-500" />, count: lesson.trainings?.length || 0 }
             ].filter(tab => tab.count > 0).map((tab) => (
               <button
