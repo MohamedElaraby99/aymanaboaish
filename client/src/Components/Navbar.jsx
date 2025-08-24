@@ -123,7 +123,7 @@ export default function Navbar() {
               {/* Logo Image */}
                              <img 
                  src={logo} 
-                 alt="4G" 
+                 alt="منصة Mr Ayman Aboaish" 
                  className="w-16 h-16 md:w-20 md:h-20 object-contain group-hover:scale-110 transition-transform duration-300 dark:drop-shadow-[0_0_15px_rgba(255,255,255,0.3)] dark:group-hover:drop-shadow-[0_0_20px_rgba(255,255,255,0.5)]"
                />
             </div>
@@ -323,7 +323,7 @@ export default function Navbar() {
                     انضم إلينا الآن
                   </h3>
                   <p className="text-sm text-gray-600 dark:text-gray-400">
-                    ابدأ رحلة التعلم مع 4G
+                    ابدأ رحلة التعلم مع منصة Mr Ayman Aboaish
                   </p>
                 </div>
                 

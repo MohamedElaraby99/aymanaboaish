@@ -335,7 +335,7 @@ export default function Signup() {
                 <div className="relative bg-white dark:bg-gray-800 rounded-full p-4 shadow-2xl border-4 border-orange-200 dark:border-orange-700 transform hover:scale-110 transition-all duration-500">
                   <img 
                     src={logo} 
-                    alt="4G Logo" 
+                    alt="منصة Mr Ayman Aboaish Logo" 
                     className="w-16 h-16 object-contain drop-shadow-lg"
                   />
                 </div>
