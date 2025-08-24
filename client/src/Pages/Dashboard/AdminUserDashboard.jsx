@@ -145,7 +145,7 @@ export default function AdminUserDashboard() {
         console.log('LocalStorage role:', localStorage.getItem('role'));
         console.log('LocalStorage isLoggedIn:', localStorage.getItem('isLoggedIn'));
         
-        if (isLoggedIn && role === "ADMIN") {
+        if (isLoggedIn && (role === "ADMIN" || role === "SUPER_ADMIN")) {
             console.log('Dispatching getAllUsers...');
             let roleFilter = "";
             if (activeTab === "users") {
@@ -341,14 +341,22 @@ export default function AdminUserDashboard() {
         setEditForm({});
     };
 
-    const handlePasswordChange = async () => {
+        const handlePasswordChange = async () => {
+        // Validate password length
+        if (passwordForm.newPassword.length < 6) {
+            toast.error("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
+            return;
+        }
+
+        // Validate password confirmation
         if (passwordForm.newPassword !== passwordForm.confirmPassword) {
             toast.error("كلمات المرور غير متطابقة");
             return;
         }
-        
-        if (passwordForm.newPassword.length < 6) {
-            toast.error("كلمة المرور يجب أن تكون 6 أحرف على الأقل");
+
+        // Additional password validation
+        if (passwordForm.newPassword.trim() === '') {
+            toast.error("كلمة المرور لا يمكن أن تكون فارغة");
             return;
         }
 
@@ -433,6 +441,14 @@ export default function AdminUserDashboard() {
             default:
                 return <FaMoneyBillWave className="text-gray-500" />;
         }
+    };
+
+    const getPasswordStrength = (password) => {
+        if (!password) return { strength: 'weak', color: 'text-gray-400', text: 'أدخل كلمة المرور' };
+        if (password.length < 6) return { strength: 'weak', color: 'text-red-500', text: 'ضعيفة جداً' };
+        if (password.length < 8) return { strength: 'medium', color: 'text-orange-500', text: 'متوسطة' };
+        if (password.length < 10) return { strength: 'good', color: 'text-yellow-500', text: 'جيدة' };
+        return { strength: 'strong', color: 'text-green-500', text: 'قوية' };
     };
 
     return (
@@ -1800,6 +1816,14 @@ export default function AdminUserDashboard() {
                                                             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
                                                             minLength="6"
                                                         />
+                                                        <div className="mt-1 flex items-center space-x-2 space-x-reverse">
+                                                            <span className={`text-xs ${getPasswordStrength(passwordForm.newPassword).color}`}>
+                                                                {getPasswordStrength(passwordForm.newPassword).text}
+                                                            </span>
+                                                            {passwordForm.newPassword.length >= 6 && (
+                                                                <span className="text-xs text-green-500">✓</span>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                     <div>
                                                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -1813,6 +1837,17 @@ export default function AdminUserDashboard() {
                                                             className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
                                                             minLength="6"
                                                         />
+                                                        <div className="mt-1 flex items-center space-x-2 space-x-reverse">
+                                                            {passwordForm.confirmPassword && (
+                                                                <>
+                                                                    {passwordForm.newPassword === passwordForm.confirmPassword ? (
+                                                                        <span className="text-xs text-green-500">✓ كلمات المرور متطابقة</span>
+                                                                    ) : (
+                                                                        <span className="text-xs text-red-500">✗ كلمات المرور غير متطابقة</span>
+                                                                    )}
+                                                                </>
+                                                            )}
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="flex justify-end space-x-3 space-x-reverse">
@@ -1827,7 +1862,10 @@ export default function AdminUserDashboard() {
                                                     </button>
                                                     <button
                                                         onClick={handlePasswordChange}
-                                                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors"
+                                                        disabled={!passwordForm.newPassword || 
+                                                                 passwordForm.newPassword.length < 6 || 
+                                                                 passwordForm.newPassword !== passwordForm.confirmPassword}
+                                                        className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                                     >
                                                         تغيير كلمة المرور
                                                     </button>

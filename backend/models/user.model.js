@@ -32,7 +32,7 @@ const userSchema = new Schema({
     password: {
         type: String,
         required: [true, 'Password is required'],
-        minLength: [4, 'Password must be at least 4 character'],
+        minLength: [6, 'Password must be at least 6 characters'],
         select: false
     },
     phoneNumber: {

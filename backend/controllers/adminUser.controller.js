@@ -532,10 +532,18 @@ const updateUser = async (req, res, next) => {
 const updateUserPassword = async (req, res, next) => {
     try {
         const { userId } = req.params;
-        const { newPassword } = req.body;
+        const { password } = req.body;
 
-        if (!newPassword || newPassword.length < 6) {
+        if (!password) {
+            return next(new AppError("Password is required", 400));
+        }
+        
+        if (password.length < 6) {
             return next(new AppError("Password must be at least 6 characters long", 400));
+        }
+        
+        if (password.trim() === '') {
+            return next(new AppError("Password cannot be empty or contain only whitespace", 400));
         }
 
         const user = await userModel.findById(userId);
@@ -544,8 +552,10 @@ const updateUserPassword = async (req, res, next) => {
         }
 
         // Hash the new password
-        user.password = newPassword;
+        user.password = password;
         await user.save();
+        
+        console.log(`Password updated successfully for user: ${user.email} (ID: ${user._id})`);
 
         res.status(200).json({
             success: true,
