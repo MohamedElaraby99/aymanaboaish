@@ -50,11 +50,11 @@ const AnimatedHero = ({ onGetStarted }) => {
       {/* Background Pattern */}
       <div className={`absolute inset-0 transition-opacity duration-500 ${isDarkMode ? 'opacity-20' : 'opacity-10'}`}>
         {/* Subtle gradient background */}
-        <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-br from-blue-900/30 via-orange-900/20 to-orange-900/30' : 'bg-gradient-to-br from-blue-50 via-orange-50 to-orange-50'}`}></div>
+        <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-br from-orange-900/30 via-orange-900/20 to-orange-900/30' : 'bg-gradient-to-br from-orange-50 via-orange-50 to-orange-50'}`}></div>
         
         {/* Geometric shapes */}
         <div className={`absolute top-20 left-20 w-32 h-32 rounded-full ${isDarkMode ? 'bg-orange-500/10' : 'bg-orange-200/30'}`}></div>
-        <div className={`absolute top-40 right-40 w-24 h-24 rounded-full ${isDarkMode ? 'bg-blue-500/10' : 'bg-blue-200/30'}`}></div>
+        <div className={`absolute top-40 right-40 w-24 h-24 rounded-full ${isDarkMode ? 'bg-orange-500/10' : 'bg-orange-200/30'}`}></div>
         <div className={`absolute bottom-40 left-40 w-20 h-20 rounded-full ${isDarkMode ? 'bg-orange-500/10' : 'bg-orange-200/30'}`}></div>
         
         {/* Subtle grid pattern */}

@@ -9,7 +9,6 @@ import { getFeaturedCourses } from "../Redux/Slices/CourseSlice";
 import { generateImageUrl } from "../utils/fileUtils";
 import AnimatedHero from "../Components/AnimatedHero";
 import fikraLogo from "../assets/Asset 2@3x.png";
-import promotionalBanner from "../assets/Untitled-1.jpg";
 import logo from "../assets/logo.png";
 // Lazy load components
 const FAQAccordion = lazy(() => import("../Components/FAQAccordion"));
@@ -168,7 +167,7 @@ export default function HomePage() {
   };
 
   const stats = [
-    { icon: FaUsers, number: "10K+", label: "طالب مسجل", color: "text-blue-600" },
+    { icon: FaUsers, number: "10K+", label: "طالب مسجل", color: "text-orange-600" },
     { icon: FaGraduationCap, number: "100+", label: "مادة متاحة", color: "text-green-600" },
     { icon: FaStar, number: "4.9", label: "متوسط التقييم", color: "text-yellow-600" },
     { icon: FaAward, number: "50+", label: "مدرس خبير", color: "text-orange-600" }
@@ -179,8 +178,8 @@ export default function HomePage() {
       icon: FaRocket,
       title: "تعلم بوتيرتك الخاصة",
       description: "جداول تعلم مرنة تناسب نمط حياتك والتزاماتك.",
-      color: "text-blue-600",
-      bgColor: "bg-blue-50 dark:bg-blue-900/20"
+      color: "text-orange-600",
+      bgColor: "bg-orange-50 dark:bg-orange-900/20"
     },
     {
       icon: FaLightbulb,
@@ -206,7 +205,7 @@ export default function HomePage() {
   ];
 
   const categories = [
-    { icon: FaCode, name: "البرمجة", count: "150+ دورة", color: "bg-blue-500" },
+    { icon: FaCode, name: "البرمجة", count: "150+ دورة", color: "bg-orange-500" },
     { icon: FaPalette, name: "التصميم", count: "120+ دورة", color: "bg-orange-500" },
     { icon: FaChartLine, name: "الأعمال", count: "200+ دورة", color: "bg-green-500" },
     { icon: FaBookOpen, name: "التسويق", count: "180+ دورة", color: "bg-orange-500" }
@@ -460,7 +459,7 @@ export default function HomePage() {
 
           {featuredLoading ? (
             <div className="text-center py-12">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-600 mx-auto mb-4"></div>
               <p className="text-gray-600 dark:text-gray-400">جاري تحميل الكورسات المميزة...</p>
             </div>
           ) : featuredCourses && featuredCourses.length > 0 ? (
@@ -509,7 +508,7 @@ export default function HomePage() {
                       </>
                     ) : (
                       <>
-                        <div className="w-full h-full bg-gradient-to-br from-blue-500 to-orange-600"></div>
+                        <div className="w-full h-full bg-gradient-to-br from-orange-500 to-orange-600"></div>
                         <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                         <div className="absolute inset-0 flex items-center justify-center">
                           <FaBookOpen className="text-6xl text-white opacity-80" />
@@ -518,7 +517,7 @@ export default function HomePage() {
                     )}
                     
                     {/* Fallback gradient for broken images */}
-                    <div className="hidden w-full h-full bg-gradient-to-br from-blue-500 to-orange-600">
+                    <div className="hidden w-full h-full bg-gradient-to-br from-orange-500 to-orange-600">
                       <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                       <div className="absolute inset-0 flex items-center justify-center">
                         <FaBookOpen className="text-6xl text-white opacity-80" />
@@ -815,7 +814,7 @@ export default function HomePage() {
 
 
       {/* Mobile App Download Section */}
-      <section className="py-20 bg-gradient-to-br from-green-50 via-blue-50 to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900" dir="rtl">
+      <section className="py-20 bg-gradient-to-br from-green-50 via-orange-50 to-orange-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900" dir="rtl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             
@@ -829,7 +828,7 @@ export default function HomePage() {
                 
                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white leading-tight">
                   حمّل التطبيق
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600">
+                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-orange-600">
                     وتعلم في أي مكان
                   </span>
                 </h2>
@@ -849,8 +848,8 @@ export default function HomePage() {
                 </div>
                 
                 <div className="flex items-center space-x-3">
-                  <div className="flex-shrink-0 w-8 h-8 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
-                    <FaPlay className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                  <div className="flex-shrink-0 w-8 h-8 bg-orange-100 dark:bg-orange-900/20 rounded-full flex items-center justify-center">
+                    <FaPlay className="w-4 h-4 text-orange-600 dark:text-orange-400" />
                   </div>
                   <span className="text-gray-700 dark:text-gray-300 mr-3">فيديوهات عالية الجودة</span>
                 </div>
@@ -911,7 +910,7 @@ export default function HomePage() {
                   <span>+10k تحميل</span>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <FaUsers className="w-4 h-4 text-blue-500 ml-1" />
+                  <FaUsers className="w-4 h-4 text-orange-500 ml-1" />
                   <span>مجاني 100%</span>
                 </div>
               </div>
@@ -937,7 +936,7 @@ export default function HomePage() {
                     <div className="p-6 space-y-6">
                       {/* App Header */}
                       <div className="flex items-center space-x-4" dir="rtl">
-                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-orange-600 rounded-xl flex items-center justify-center">
+                        <div className="w-12 h-12 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center">
                           <img src={logo} alt="logo" className="w-12 h-12" />
                         </div>
                         <div>
@@ -948,22 +947,22 @@ export default function HomePage() {
 
                       {/* Course Cards Preview */}
                       <div className="space-y-4">
-                        <div className="bg-gradient-to-r from-blue-50 to-orange-50 rounded-xl p-4">
+                        <div className="bg-gradient-to-r from-orange-50 to-orange-50 rounded-xl p-4">
                           <div className="flex justify-between items-start mb-2">
                             <h4 className="font-semibold text-gray-900">الأحياء</h4>
                             <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">جديد</span>
                           </div>
                           <p className="text-sm text-gray-600 mb-3"> الأحياء </p>
                           <div className="flex justify-between items-center">
-                            <span className="text-sm text-blue-600 font-medium">30% مكتمل</span>
+                            <span className="text-sm text-orange-600 font-medium">30% مكتمل</span>
                             <button className="bg-orange-600 text-white px-4 py-1 rounded-full text-xs">متابعة</button>
                           </div>
                         </div>
 
-                        <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl p-4">
+                        <div className="bg-gradient-to-r from-green-50 to-orange-50 rounded-xl p-4">
                           <div className="flex justify-between items-start mb-2">
                             <h4 className="font-semibold text-gray-900">علوم متكاملة </h4>
-                            <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">شائع</span>
+                            <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded-full">شائع</span>
                           </div>
                           <p className="text-sm text-gray-600 mb-3">  علوم متكاملة </p>
                           <div className="flex justify-between items-center">
@@ -1000,7 +999,7 @@ export default function HomePage() {
                   <FaDownload className="text-white text-2xl" />
                 </div>
                 
-                <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
+                <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-gradient-to-br from-green-400 to-orange-500 rounded-full flex items-center justify-center shadow-lg animate-pulse">
                   <FaMobile className="text-white text-xl" />
                 </div>
               </div>
@@ -1010,7 +1009,7 @@ export default function HomePage() {
       </section>
 
       {/* Static FAQ Section */}
-      <section className="py-16 px-4 lg:px-20 bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-gray-800" dir="rtl">
+      <section className="py-16 px-4 lg:px-20 bg-gradient-to-br from-gray-50 to-orange-50 dark:from-gray-900 dark:to-gray-800" dir="rtl">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-gray-800 dark:text-white mb-4 text-right">
