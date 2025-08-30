@@ -6,6 +6,7 @@ const initialState = {
   featuredCourses: [],
   currentCourse: null,
   courseStats: null,
+  lessonProgression: null,
   loading: false,
   featuredLoading: false,
   error: null,
@@ -77,6 +78,19 @@ export const getCourseById = createAsyncThunk(
   async (courseId, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/courses/${courseId}`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+// Get course by ID with lesson progression
+export const getCourseWithProgression = createAsyncThunk(
+  'course/getCourseWithProgression',
+  async (courseId, { rejectWithValue }) => {
+    try {
+      const response = await axiosInstance.get(`/courses/${courseId}/progression`);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data);
@@ -436,6 +450,20 @@ const courseSlice = createSlice({
         state.currentCourse = action.payload.data.course;
       })
       .addCase(getCourseById.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Get course with progression
+      .addCase(getCourseWithProgression.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCourseWithProgression.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentCourse = action.payload.data.course;
+        state.lessonProgression = action.payload.data.progression;
+      })
+      .addCase(getCourseWithProgression.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

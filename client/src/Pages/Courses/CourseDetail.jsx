@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Layout from '../../Layout/Layout';
-import { getCourseById } from '../../Redux/Slices/CourseSlice';
+import { getCourseById, getCourseWithProgression } from '../../Redux/Slices/CourseSlice';
 import { 
   purchaseContent, 
   checkPurchaseStatus, 
@@ -43,7 +43,7 @@ export default function CourseDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { currentCourse, loading } = useSelector((state) => state.course);
+  const { currentCourse, lessonProgression, loading } = useSelector((state) => state.course);
   const { walletBalance, purchaseStatus, loading: paymentLoading } = useSelector((state) => state.payment);
   const { data: user, isLoggedIn } = useSelector((state) => state.auth);
   const courseAccessState = useSelector((state) => state.courseAccess.byCourseId[id]);
@@ -69,9 +69,15 @@ export default function CourseDetail() {
 
   useEffect(() => {
     if (id) {
-      dispatch(getCourseById(id));
+      if (user && isLoggedIn) {
+        // Use progression endpoint for logged-in users
+        dispatch(getCourseWithProgression(id));
+      } else {
+        // Use regular endpoint for non-logged-in users
+        dispatch(getCourseById(id));
+      }
     }
-  }, [dispatch, id]);
+  }, [dispatch, id, user, isLoggedIn]);
 
   // Check timed-access via code
   useEffect(() => {
@@ -391,10 +397,46 @@ export default function CourseDetail() {
     setShowLessonModal(true);
   };
 
+  // Helper function to check if user has access to a lesson based on progression
+  const hasLessonAccess = (lessonId, unitId = null) => {
+    if (!lessonProgression || user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN') {
+      return true; // Admin users have access to all content
+    }
+
+    if (unitId) {
+      // Check in units
+      const unit = lessonProgression.units?.find(u => u._id === unitId);
+      const lesson = unit?.lessons?.find(l => l._id === lessonId);
+      return lesson?.hasAccess || false;
+    } else {
+      // Check in direct lessons
+      const lesson = lessonProgression.directLessons?.find(l => l._id === lessonId);
+      return lesson?.hasAccess || false;
+    }
+  };
+
+  // Helper function to get lesson access reason
+  const getLessonAccessReason = (lessonId, unitId = null) => {
+    if (!lessonProgression) return null;
+
+    if (unitId) {
+      const unit = lessonProgression.units?.find(u => u._id === unitId);
+      const lesson = unit?.lessons?.find(l => l._id === lessonId);
+      return lesson?.accessReason || null;
+    } else {
+      const lesson = lessonProgression.directLessons?.find(l => l._id === lessonId);
+      return lesson?.accessReason || null;
+    }
+  };
+
   const renderPurchaseButton = (item, purchaseType, showButton = true, unitId = null) => {
     
+    // Check lesson access based on progression
+    const hasAccess = hasLessonAccess(item._id, unitId);
+    const accessReason = getLessonAccessReason(item._id, unitId);
+
     // Admin users have access to all content
-    if (user?.role === 'ADMIN') {
+    if (user?.role === 'ADMIN' || user?.role === 'SUPER_ADMIN') {
       return (
         <WatchButton
           item={item}
@@ -403,6 +445,22 @@ export default function CourseDetail() {
           variant="primary"
           showButton={showButton}
         />
+      );
+    }
+
+    // If user doesn't have access to this lesson, show locked state
+    if (!hasAccess) {
+      return (
+        <div className="flex items-center gap-2">
+          <button 
+            disabled
+            className="text-gray-400 cursor-not-allowed flex items-center gap-1"
+            title={accessReason || 'يجب اجتياز الامتحان في الدرس السابق'}
+          >
+            <FaLock />
+            <span>مقفل</span>
+          </button>
+        </div>
       );
     }
 
@@ -735,34 +793,64 @@ export default function CourseDetail() {
                     المقدمة
                   </h3>
                   <div className="space-y-3">
-                    {currentCourse.directLessons.map((lesson, index) => (
-                      <div
-                        key={lesson._id || index}
-                        className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg"
-                      >
-                        <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 bg-orange-600 rounded-full flex items-center justify-center">
-                            <FaPlay className="text-white text-sm" />
+                    {currentCourse.directLessons.map((lesson, index) => {
+                      const hasAccess = hasLessonAccess(lesson._id);
+                      const accessReason = getLessonAccessReason(lesson._id);
+                      
+                      return (
+                        <div
+                          key={lesson._id || index}
+                          className={`flex items-center justify-between p-4 rounded-lg ${
+                            hasAccess 
+                              ? 'bg-gray-50 dark:bg-gray-700' 
+                              : 'bg-gray-100 dark:bg-gray-800 opacity-75'
+                          }`}
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                              hasAccess 
+                                ? 'bg-orange-600' 
+                                : 'bg-gray-400'
+                            }`}>
+                              {hasAccess ? (
+                                <FaPlay className="text-white text-sm" />
+                              ) : (
+                                <FaLock className="text-white text-sm" />
+                              )}
+                            </div>
+                            <div>
+                              <h4 className={`font-medium ${
+                                hasAccess 
+                                  ? 'text-gray-900 dark:text-white' 
+                                  : 'text-gray-500 dark:text-gray-400'
+                              }`}>
+                                {lesson.title}
+                                {!hasAccess && (
+                                  <span className="text-xs text-red-500 ml-2">(مقفل)</span>
+                                )}
+                              </h4>
+                              <p className={`text-sm ${
+                                hasAccess 
+                                  ? 'text-gray-600 dark:text-gray-400' 
+                                  : 'text-gray-500 dark:text-gray-500'
+                              }`}>
+                                {hasAccess ? lesson.description : (accessReason || 'يجب اجتياز الامتحان في الدرس السابق')}
+                              </p>
+                            </div>
                           </div>
-                          <div>
-                            <h4 className="font-medium text-gray-900 dark:text-white">
-                              {lesson.title}
-                            </h4>
-                            <p className="text-sm text-gray-600 dark:text-gray-400">
-                              {lesson.description}
-                            </p>
+                          <div className="flex items-center gap-4">
+                            {!hidePrices && lesson.price > 0 && (
+                              <span className={`text-sm font-medium ${
+                                hasAccess ? 'text-green-600' : 'text-gray-400'
+                              }`}>
+                                {lesson.price} جنيه
+                              </span>
+                            )}
+                            {renderPurchaseButton(lesson, 'lesson')}
                           </div>
                         </div>
-                        <div className="flex items-center gap-4">
-                          {!hidePrices && lesson.price > 0 && (
-                            <span className="text-sm font-medium text-green-600">
-                              {lesson.price} جنيه
-                            </span>
-                          )}
-                          {renderPurchaseButton(lesson, 'lesson')}
-                        </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -815,34 +903,64 @@ export default function CourseDetail() {
                         {expandedUnits.has(unit._id || unitIndex) && unit.lessons && (
                           <div className="p-4 bg-white dark:bg-gray-800">
                             <div className="space-y-3">
-                              {unit.lessons.map((lesson, lessonIndex) => (
-                                <div
-                                  key={lesson._id || lessonIndex}
-                                  className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-lg"
-                                >
-                                  <div className="flex items-center gap-3">
-                                    <div className="w-6 h-6 bg-orange-600 rounded-full flex items-center justify-center">
-                                      <FaPlay className="text-white text-xs" />
+                              {unit.lessons.map((lesson, lessonIndex) => {
+                                const hasAccess = hasLessonAccess(lesson._id, unit._id);
+                                const accessReason = getLessonAccessReason(lesson._id, unit._id);
+                                
+                                return (
+                                  <div
+                                    key={lesson._id || lessonIndex}
+                                    className={`flex items-center justify-between p-3 rounded-lg ${
+                                      hasAccess 
+                                        ? 'bg-gray-50 dark:bg-gray-700' 
+                                        : 'bg-gray-100 dark:bg-gray-800 opacity-75'
+                                    }`}
+                                  >
+                                    <div className="flex items-center gap-3">
+                                      <div className={`w-6 h-6 rounded-full flex items-center justify-center ${
+                                        hasAccess 
+                                          ? 'bg-orange-600' 
+                                          : 'bg-gray-400'
+                                      }`}>
+                                        {hasAccess ? (
+                                          <FaPlay className="text-white text-xs" />
+                                        ) : (
+                                          <FaLock className="text-white text-xs" />
+                                        )}
+                                      </div>
+                                      <div>
+                                        <h5 className={`font-medium ${
+                                          hasAccess 
+                                            ? 'text-gray-900 dark:text-white' 
+                                            : 'text-gray-500 dark:text-gray-400'
+                                        }`}>
+                                          {lesson.title}
+                                          {!hasAccess && (
+                                            <span className="text-xs text-red-500 ml-2">(مقفل)</span>
+                                          )}
+                                        </h5>
+                                        <p className={`text-sm ${
+                                          hasAccess 
+                                            ? 'text-gray-600 dark:text-gray-400' 
+                                            : 'text-gray-500 dark:text-gray-500'
+                                        }`}>
+                                          {hasAccess ? lesson.description : (accessReason || 'يجب اجتياز الامتحان في الدرس السابق')}
+                                        </p>
+                                      </div>
                                     </div>
-                                    <div>
-                                      <h5 className="font-medium text-gray-900 dark:text-white">
-                                        {lesson.title}
-                                      </h5>
-                                      <p className="text-sm text-gray-600 dark:text-gray-400">
-                                        {lesson.description}
-                                      </p>
+                                    <div className="flex items-center gap-4">
+                                      {!hidePrices && lesson.price > 0 && (
+                                        <span className={`text-sm font-medium ${
+                                          hasAccess ? 'text-green-600' : 'text-gray-400'
+                                        }`}>
+                                          {lesson.price} جنيه
+                                        </span>
+                                      )}
+                                      {renderPurchaseButton(lesson, 'lesson', true, unit._id)}
                                     </div>
                                   </div>
-                                  <div className="flex items-center gap-4">
-                                    {!hidePrices && lesson.price > 0 && (
-                                      <span className="text-sm font-medium text-green-600">
-                                        {lesson.price} جنيه
-                                      </span>
-                                    )}
-                                    {renderPurchaseButton(lesson, 'lesson', true, unit._id)}
-                                  </div>
-                                </div>
-                              ))}
+                                );
+                              })}
                             </div>
                           </div>
                         )}

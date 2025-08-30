@@ -7,6 +7,7 @@ import {
   getAllCourses, 
   getAdminCourses, 
   getCourseById, 
+  getCourseWithProgression,
   getLessonById,
   createCourse, 
   updateCourse, 
@@ -63,6 +64,7 @@ router.patch('/:id/toggle-featured', isLoggedIn, authorisedRoles('ADMIN', 'SUPER
 router.get('/admin/all', isLoggedIn, authorisedRoles('ADMIN', 'SUPER_ADMIN'), getAdminCourses);
 router.get('/stats', getCourseStats);
 router.get('/:id', getCourseById);
+router.get('/:id/progression', isLoggedIn, getCourseWithProgression);
 
 // Get optimized lesson data
 router.get('/:courseId/lessons/:lessonId', isLoggedIn, getLessonById);

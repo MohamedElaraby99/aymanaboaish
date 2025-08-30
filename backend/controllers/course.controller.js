@@ -1,5 +1,6 @@
 import Course from '../models/course.model.js';
 import AppError from '../utils/error.utils.js';
+import { checkLessonAccess, canAccessLessonContent, getLessonProgression } from '../utils/lessonProgression.js';
 
 import fs from 'fs';
 import path from 'path';
@@ -438,6 +439,47 @@ export const getCourseById = async (req, res, next) => {
   }
 };
 
+// Get course by ID with lesson progression information
+export const getCourseWithProgression = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user?._id || req.user?.id;
+
+    if (!userId) {
+      return res.status(401).json({ success: false, message: 'User authentication required' });
+    }
+
+    const course = await Course.findById(id)
+      .populate('instructor', 'name')
+      .populate('stage', 'name')
+      .populate('subject', 'title');
+        
+    if (!course) {
+      return res.status(404).json({ success: false, message: 'Course not found' });
+    }
+
+    // Get lesson progression information
+    const progression = await getLessonProgression(userId, id);
+
+    // Create secure version of course with progression data
+    const courseObj = course.toObject();
+    
+    // Replace units with progression data
+    courseObj.units = progression.units;
+    courseObj.directLessons = progression.directLessons;
+
+    return res.status(200).json({ 
+      success: true, 
+      data: { 
+        course: courseObj,
+        progression: progression
+      } 
+    });
+  } catch (error) {
+    return next(new AppError(error.message, 500));
+  }
+};
+
 // Get optimized lesson data with processed exam results
 export const getLessonById = async (req, res, next) => {
   try {
@@ -461,6 +503,18 @@ export const getLessonById = async (req, res, next) => {
 
     if (!lesson) {
       return res.status(404).json({ success: false, message: 'Lesson not found' });
+    }
+
+    // Check if user has access to this lesson based on exam progression
+    if (userId) {
+      const accessCheck = await checkLessonAccess(userId, courseId, lessonId, unitId);
+      if (!accessCheck.hasAccess) {
+        return res.status(403).json({ 
+          success: false, 
+          message: accessCheck.reason || 'Access denied',
+          requiredExam: accessCheck.requiredExam
+        });
+      }
     }
 
     // Process exam data with user results
