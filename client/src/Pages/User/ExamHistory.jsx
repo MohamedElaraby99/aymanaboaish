@@ -349,56 +349,85 @@ const ExamHistory = () => {
 
                 {/* Question Review */}
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
-                    Question Review
-                  </h4>
-                  <div className="space-y-4">
-                    {selectedResult.questions?.map((question, index) => (
-                      <div key={index} className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
-                        <div className="flex items-start gap-2 mb-3">
-                          {question.isCorrect ? (
-                            <FaCheckCircle className="text-green-500 mt-1" />
-                          ) : (
-                            <FaTimesCircle className="text-red-500 mt-1" />
-                          )}
-                          <div className="flex-1">
-                            <p className="font-medium text-gray-900 dark:text-white mb-2">
-                              Question {index + 1}: {question.question}
-                            </p>
-                            <div className="space-y-1">
-                              {question.options.slice(0, question.numberOfOptions || 4).map((option, optionIndex) => (
-                                <div
-                                  key={optionIndex}
-                                  className={`p-2 rounded ${
-                                    optionIndex === question.correctAnswer
-                                      ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400'
-                                      : optionIndex === question.userAnswer && !question.isCorrect
-                                      ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400'
-                                      : 'bg-gray-100 dark:bg-gray-700'
-                                  }`}
-                                >
-                                  {option}
-                                  {optionIndex === question.correctAnswer && (
-                                    <span className="ml-2 text-green-600 dark:text-green-400">✓ Correct</span>
-                                  )}
-                                  {optionIndex === question.userAnswer && !question.isCorrect && (
-                                    <span className="ml-2 text-red-600 dark:text-red-400">✗ Your Answer</span>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-                            {question.explanation && (
-                              <div className="mt-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
-                                <p className="text-sm text-orange-700 dark:text-orange-300">
-                                  <strong>Explanation:</strong> {question.explanation}
-                                </p>
-                              </div>
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      Question Review
+                    </h4>
+                    {selectedResult.examType === 'training' && (
+                      <div className="flex items-center gap-2 px-3 py-1 bg-orange-100 dark:bg-orange-900/20 rounded-full">
+                        <FaClipboardCheck className="text-orange-600 dark:text-orange-400" />
+                        <span className="text-sm text-orange-700 dark:text-orange-300 font-medium">
+                          Training Exam - Answers Visible
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  {selectedResult.questions && selectedResult.questions.length > 0 ? (
+                    <div className="space-y-4">
+                      {selectedResult.questions.map((question, index) => (
+                        <div key={index} className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+                          <div className="flex items-start gap-2 mb-3">
+                            {question.isCorrect ? (
+                              <FaCheckCircle className="text-green-500 mt-1" />
+                            ) : (
+                              <FaTimesCircle className="text-red-500 mt-1" />
                             )}
+                            <div className="flex-1">
+                              <p className="font-medium text-gray-900 dark:text-white mb-2">
+                                Question {index + 1}: {question.question}
+                              </p>
+                              <div className="space-y-1">
+                                {question.options && question.options.slice(0, question.numberOfOptions || 4).map((option, optionIndex) => (
+                                  <div
+                                    key={optionIndex}
+                                    className={`p-2 rounded ${
+                                      optionIndex === question.correctAnswer
+                                        ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400'
+                                        : optionIndex === question.userAnswer && !question.isCorrect
+                                        ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400'
+                                        : optionIndex === question.userAnswer && question.isCorrect
+                                        ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400'
+                                        : 'bg-gray-100 dark:bg-gray-700'
+                                    }`}
+                                  >
+                                    {option}
+                                    {optionIndex === question.correctAnswer && (
+                                      <span className="ml-2 text-green-600 dark:text-green-400">✓ Correct Answer</span>
+                                    )}
+                                    {optionIndex === question.userAnswer && !question.isCorrect && (
+                                      <span className="ml-2 text-red-600 dark:text-red-400">✗ Your Answer</span>
+                                    )}
+                                    {optionIndex === question.userAnswer && question.isCorrect && (
+                                      <span className="ml-2 text-green-600 dark:text-green-400">✓ Your Answer (Correct)</span>
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                              {question.explanation && (
+                                <div className="mt-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                                  <p className="text-sm text-orange-700 dark:text-orange-300">
+                                    <strong>Explanation:</strong> {question.explanation}
+                                  </p>
+                                </div>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <FaBook className="text-4xl text-gray-400 mx-auto mb-4" />
+                      <p className="text-gray-600 dark:text-gray-400 mb-2">
+                        No detailed question information available for this exam.
+                      </p>
+                      {selectedResult.examType === 'final' && (
+                        <p className="text-sm text-orange-600 dark:text-orange-400">
+                          Final exam answers are not shown to maintain exam integrity.
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>

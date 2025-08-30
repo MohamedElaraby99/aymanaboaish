@@ -116,6 +116,59 @@ const takeTrainingExam = asyncHandler(async (req, res) => {
     training.userAttempts.push(attempt);
     await course.save();
 
+    // Also save to ExamResult collection for exam history
+    // Check if exam result already exists and update it, otherwise create new one
+    const existingExamResult = await ExamResult.findOne({
+        user: userId,
+        course: courseId,
+        lessonId: lessonId,
+        examType: 'training'
+    });
+
+    const examResultData = {
+        user: userId,
+        course: courseId,
+        lessonId: lessonId,
+        lessonTitle: lesson.title,
+        unitId: unitId || null,
+        unitTitle: unit?.title || null,
+        examType: 'training',
+        score: percentage,
+        totalQuestions: totalQuestions,
+        correctAnswers: correctAnswers,
+        wrongAnswers: totalQuestions - correctAnswers,
+        timeTaken: timeTaken,
+        timeLimit: training.timeLimit || 60,
+        passingScore: training.passingScore || 50,
+        passed: percentage >= (training.passingScore || 50),
+        answers: questions.map((question, index) => ({
+            questionIndex: index,
+            selectedAnswer: detailedAnswers[index]?.selectedAnswer || -1,
+            correctAnswer: question.correctAnswer,
+            isCorrect: detailedAnswers[index]?.isCorrect || false
+        })),
+        questions: questions.map((question, index) => ({
+            question: question.question,
+            options: question.options,
+            correctAnswer: question.correctAnswer,
+            explanation: question.explanation || '',
+            userAnswer: detailedAnswers[index]?.selectedAnswer,
+            isCorrect: detailedAnswers[index]?.isCorrect,
+            questionIndex: index,
+            numberOfOptions: question.options.length
+        }))
+    };
+
+    if (existingExamResult) {
+        // Update existing exam result
+        Object.assign(existingExamResult, examResultData);
+        await existingExamResult.save();
+    } else {
+        // Create new exam result
+        const examResult = new ExamResult(examResultData);
+        await examResult.save();
+    }
+
     res.status(201).json({
         success: true,
         message: "Training completed successfully",
@@ -140,6 +193,16 @@ const takeTrainingExam = asyncHandler(async (req, res) => {
                 userAnswer: detailedAnswers[index]?.selectedAnswer,
                 isCorrect: detailedAnswers[index]?.isCorrect,
                 questionIndex: index
+            })),
+            questions: questions.map((question, index) => ({
+                question: question.question,
+                options: question.options,
+                correctAnswer: question.correctAnswer,
+                explanation: question.explanation || '',
+                userAnswer: detailedAnswers[index]?.selectedAnswer,
+                isCorrect: detailedAnswers[index]?.isCorrect,
+                questionIndex: index,
+                numberOfOptions: question.options.length
             }))
         }
     });
@@ -293,6 +356,59 @@ const takeFinalExam = asyncHandler(async (req, res) => {
     exam.userAttempts.push(attempt);
     await course.save();
 
+    // Also save to ExamResult collection for exam history
+    // Check if exam result already exists and update it, otherwise create new one
+    const existingExamResult = await ExamResult.findOne({
+        user: userId,
+        course: courseId,
+        lessonId: lessonId,
+        examType: 'final'
+    });
+
+    const examResultData = {
+        user: userId,
+        course: courseId,
+        lessonId: lessonId,
+        lessonTitle: lesson.title,
+        unitId: unitId || null,
+        unitTitle: unit?.title || null,
+        examType: 'final',
+        score: percentage,
+        totalQuestions: totalQuestions,
+        correctAnswers: correctAnswers,
+        wrongAnswers: totalQuestions - correctAnswers,
+        timeTaken: timeTaken,
+        timeLimit: exam.timeLimit || 60,
+        passingScore: exam.passingScore || 50,
+        passed: percentage >= (exam.passingScore || 50),
+        answers: questions.map((question, index) => ({
+            questionIndex: index,
+            selectedAnswer: detailedAnswers[index]?.selectedAnswer || -1,
+            correctAnswer: question.correctAnswer,
+            isCorrect: detailedAnswers[index]?.isCorrect || false
+        })),
+        questions: questions.map((question, index) => ({
+            question: question.question,
+            options: question.options,
+            correctAnswer: question.correctAnswer,
+            explanation: question.explanation || '',
+            userAnswer: detailedAnswers[index]?.selectedAnswer,
+            isCorrect: detailedAnswers[index]?.isCorrect,
+            questionIndex: index,
+            numberOfOptions: question.options.length
+        }))
+    };
+
+    if (existingExamResult) {
+        // Update existing exam result
+        Object.assign(existingExamResult, examResultData);
+        await existingExamResult.save();
+    } else {
+        // Create new exam result
+        const examResult = new ExamResult(examResultData);
+        await examResult.save();
+    }
+
     res.status(201).json({
         success: true,
         message: "Exam completed successfully",
@@ -308,7 +424,17 @@ const takeFinalExam = asyncHandler(async (req, res) => {
             correctAnswers,
             wrongAnswers: totalQuestions - correctAnswers,
             timeTaken: timeTaken,
-            answers: detailedAnswers
+            answers: detailedAnswers,
+            questions: questions.map((question, index) => ({
+                question: question.question,
+                options: question.options,
+                correctAnswer: question.correctAnswer,
+                explanation: question.explanation || '',
+                userAnswer: detailedAnswers[index]?.selectedAnswer,
+                isCorrect: detailedAnswers[index]?.isCorrect,
+                questionIndex: index,
+                numberOfOptions: question.options.length
+            }))
         }
     });
 });

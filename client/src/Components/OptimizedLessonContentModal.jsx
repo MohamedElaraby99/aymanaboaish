@@ -475,20 +475,6 @@ const OptimizedLessonContentModal = ({ isOpen, onClose, courseId, lessonId, unit
                 <div className="text-lg font-bold text-green-600">
                   {Math.max(...training.userResults.map(r => r.percentage))}%
                 </div>
-                <button 
-                  onClick={() => {
-                    // Check if access has expired before clearing training attempt
-                    if (isAccessExpired) {
-                      return;
-                    }
-                    handleClearTrainingAttempt(training._id);
-                  }}
-                  className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-xs transition-colors mt-2"
-                  title="مسح محاولات التدريب"
-                  disabled={isAccessExpired}
-                >
-                  مسح المحاولات
-                </button>
               </div>
             )}
             

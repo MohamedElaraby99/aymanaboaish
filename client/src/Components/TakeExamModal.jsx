@@ -427,10 +427,21 @@ const TakeExamModal = ({
 
                 {/* Detailed Results */}
                 <div className="space-y-4">
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
-                    Question Review
-                  </h4>
-                  {examResult?.questions?.map((question, index) => (
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      Question Review
+                    </h4>
+                    {examType === 'training' && (
+                      <div className="flex items-center gap-2 px-3 py-1 bg-orange-100 dark:bg-orange-900/20 rounded-full">
+                        <FaClipboardCheck className="text-orange-600 dark:text-orange-400" />
+                        <span className="text-sm text-orange-700 dark:text-orange-300 font-medium">
+                          Training Exam - Answers Visible
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  {examResult?.questions && examResult.questions.length > 0 ? (
+                    examResult.questions.map((question, index) => (
                     <div key={index} className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
                       <div className="flex items-start gap-2 mb-3">
                         {question.isCorrect ? (
@@ -474,7 +485,20 @@ const TakeExamModal = ({
                         </div>
                       </div>
                     </div>
-                  ))}
+                    ))
+                  ) : (
+                    <div className="text-center py-8">
+                      <FaBook className="text-4xl text-gray-400 mx-auto mb-4" />
+                      <p className="text-gray-600 dark:text-gray-400 mb-2">
+                        No detailed question information available for this exam.
+                      </p>
+                      {examType === 'final' && (
+                        <p className="text-sm text-orange-600 dark:text-orange-400">
+                          Final exam answers are not shown to maintain exam integrity.
+                        </p>
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             ) : (

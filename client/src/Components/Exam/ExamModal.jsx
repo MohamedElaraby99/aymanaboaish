@@ -37,6 +37,7 @@ const ExamModal = ({ isOpen, onClose, exam, courseId, lessonId, unitId, examType
   const [examStarted, setExamStarted] = useState(false);
   const [examCompleted, setExamCompleted] = useState(false);
   const [showResults, setShowResults] = useState(false);
+  const [showDetailedResults, setShowDetailedResults] = useState(false);
   const [timeTaken, setTimeTaken] = useState(0);
   const [imageModalOpen, setImageModalOpen] = useState(false);
   const [currentImage, setCurrentImage] = useState(null);
@@ -99,6 +100,8 @@ const ExamModal = ({ isOpen, onClose, exam, courseId, lessonId, unitId, examType
     if (lastExamResult.examId && exam?._id && String(lastExamResult.examId) !== String(exam._id)) {
       return;
     }
+    console.log('📊 Exam result received:', lastExamResult);
+    console.log('📊 Questions data:', lastExamResult.questions);
     setShowResults(true);
     setExamCompleted(true);
     setIsTimerRunning(false);
@@ -379,12 +382,120 @@ const ExamModal = ({ isOpen, onClose, exam, courseId, lessonId, unitId, examType
           </div>
         </div>
 
-        <div className="mt-6">
+        <div className="mt-6 space-y-3">
+          {examType === 'training' && lastExamResult?.questions && lastExamResult.questions.length > 0 && (
+            <button
+              onClick={() => setShowDetailedResults(true)}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 px-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+            >
+              <FaEye />
+              عرض الإجابات التفصيلية
+            </button>
+          )}
           <button
             onClick={onClose}
             className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 px-4 rounded-lg font-medium transition-colors"
           >
             إغلاق
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  const renderDetailedResults = () => {
+    if (!lastExamResult?.questions || lastExamResult.questions.length === 0) {
+      return (
+        <div className="text-center py-8">
+          <p className="text-gray-600 dark:text-gray-400">
+            لا توجد معلومات تفصيلية متاحة لهذا الامتحان.
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <div className="space-y-6">
+        <div className="flex items-center justify-between">
+          <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+            مراجعة الأسئلة
+          </h3>
+          <button
+            onClick={() => setShowDetailedResults(false)}
+            className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+          >
+            <FaTimes />
+          </button>
+        </div>
+
+        {examType === 'training' && (
+          <div className="flex items-center gap-2 px-3 py-1 bg-orange-100 dark:bg-orange-900/20 rounded-full w-fit">
+            <FaEye className="text-orange-600 dark:text-orange-400" />
+            <span className="text-sm text-orange-700 dark:text-orange-300 font-medium">
+              امتحان تدريبي - الإجابات مرئية
+            </span>
+          </div>
+        )}
+
+        <div className="space-y-4">
+          {lastExamResult.questions.map((question, index) => (
+            <div key={index} className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
+              <div className="flex items-start gap-2 mb-3">
+                {question.isCorrect ? (
+                  <FaCheck className="text-green-500 mt-1" />
+                ) : (
+                  <FaTimes className="text-red-500 mt-1" />
+                )}
+                <div className="flex-1">
+                  <p className="font-medium text-gray-900 dark:text-white mb-2">
+                    السؤال {index + 1}: {question.question}
+                  </p>
+                  <div className="space-y-1">
+                    {question.options && question.options.slice(0, question.numberOfOptions || 4).map((option, optionIndex) => (
+                      <div
+                        key={optionIndex}
+                        className={`p-2 rounded ${
+                          optionIndex === question.correctAnswer
+                            ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400'
+                            : optionIndex === question.userAnswer && !question.isCorrect
+                            ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400'
+                            : optionIndex === question.userAnswer && question.isCorrect
+                            ? 'bg-green-100 dark:bg-green-900/20 text-green-700 dark:text-green-400'
+                            : 'bg-gray-100 dark:bg-gray-700'
+                        }`}
+                      >
+                        {option}
+                        {optionIndex === question.correctAnswer && (
+                          <span className="ml-2 text-green-600 dark:text-green-400">✓ الإجابة الصحيحة</span>
+                        )}
+                        {optionIndex === question.userAnswer && !question.isCorrect && (
+                          <span className="ml-2 text-red-600 dark:text-red-400">✗ إجابتك</span>
+                        )}
+                        {optionIndex === question.userAnswer && question.isCorrect && (
+                          <span className="ml-2 text-green-600 dark:text-green-400">✓ إجابتك (صحيحة)</span>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                  {question.explanation && (
+                    <div className="mt-3 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+                      <p className="text-sm text-orange-700 dark:text-orange-300">
+                        <strong>التفسير:</strong> {question.explanation}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mt-6">
+          <button
+            onClick={() => setShowDetailedResults(false)}
+            className="w-full bg-orange-600 hover:bg-orange-700 text-white py-3 px-4 rounded-lg font-medium transition-colors"
+          >
+            العودة للنتائج
           </button>
         </div>
       </div>
@@ -456,7 +567,7 @@ const ExamModal = ({ isOpen, onClose, exam, courseId, lessonId, unitId, examType
             </div>
           ) : showResults ? (
             // Results Screen
-            renderResults()
+            showDetailedResults ? renderDetailedResults() : renderResults()
           ) : (
             // Exam Interface
             <div className="space-y-6">

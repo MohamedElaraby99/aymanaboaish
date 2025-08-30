@@ -86,6 +86,42 @@ const examResultSchema = new Schema({
             }
         }
     ],
+    questions: [
+        {
+            question: {
+                type: String,
+                required: true
+            },
+            options: [{
+                type: String,
+                required: true
+            }],
+            correctAnswer: {
+                type: Number,
+                required: true
+            },
+            explanation: {
+                type: String,
+                default: ''
+            },
+            userAnswer: {
+                type: Number,
+                default: -1
+            },
+            isCorrect: {
+                type: Boolean,
+                required: true
+            },
+            questionIndex: {
+                type: Number,
+                required: true
+            },
+            numberOfOptions: {
+                type: Number,
+                required: true
+            }
+        }
+    ],
     completedAt: {
         type: Date,
         default: Date.now
